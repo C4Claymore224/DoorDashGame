@@ -16,16 +16,22 @@ const  jump_height : float = 350
 
 var gravity = 9.2
 
-var mouse_pos
+var mouse_captured : bool = false
 
 func _ready() -> void:
-	pass
+	capture_mouse()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if mouse_captured and event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-60), deg_to_rad(40))
+	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		capture_mouse()
+	
+	if Input.is_key_pressed(KEY_ESCAPE):
+		release_mouse()
 
 func _physics_process(delta: float) -> void:
 	
@@ -48,6 +54,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed * delta)
 		velocity.z = move_toward(velocity.z, 0, speed * delta)
 	
+	
 	#handle sprint
 	if Input.is_action_pressed("Sprint"):
 		speed = SPRINT_SPEED
@@ -64,3 +71,11 @@ func _head_bob(time) -> Vector3:
 	var pos = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	return pos
+
+func release_mouse() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	mouse_captured = false
+
+func capture_mouse() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	mouse_captured = true
