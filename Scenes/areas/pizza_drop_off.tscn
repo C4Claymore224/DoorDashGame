@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://diqnppuuvu2ek"]
+
+[ext_resource type="Script" uid="uid://bqd8o5awwr0g0" path="res://code/area/pizza_drop_off.gd" id="1_iglk3"]
+[ext_resource type="Resource" uid="uid://dx28weynwefm2" path="res://Resources/Inventory/Items/pizza.tres" id="2_lyb7l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcrpb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lyb7l"]
+
+[node name="Pizza Drop off" type="Area3D"]
+script = ExtResource("1_iglk3")
+item = ExtResource("2_lyb7l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_mcrpb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_lyb7l")

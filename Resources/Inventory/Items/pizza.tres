@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InvItem" load_steps=3 format=3 uid="uid://dx28weynwefm2"]
+
+[ext_resource type="Texture2D" uid="uid://bq2dc2sdf8rf8" path="res://Assets/Pizza.png" id="1_3hjh5"]
+[ext_resource type="Script" uid="uid://desfnl2axl7ab" path="res://Resources/Inventory/Items/Inv_Item.gd" id="1_8ggim"]
+
+[resource]
+script = ExtResource("1_8ggim")
+display = ExtResource("1_3hjh5")
+name = "Pizza"
+metadata/_custom_type_script = "uid://desfnl2axl7ab"

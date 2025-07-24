@@ -1,85 +1,80 @@
 [gd_scene load_steps=9 format=3 uid="uid://btm8qp6vtfx1v"]
 
+[ext_resource type="Script" uid="uid://diu1me8pvxxgn" path="res://code/world.gd" id="1_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://dl3uh7rq6crmk" path="res://Scenes/player.tscn" id="1_a02cp"]
+[ext_resource type="PackedScene" uid="uid://cu4d4sul34naq" path="res://Scenes/cylender of doom.tscn" id="2_go701"]
+[ext_resource type="PackedScene" uid="uid://diqnppuuvu2ek" path="res://Scenes/areas/pizza_drop_off.tscn" id="4_8j60k"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a02cp"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_go701"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 
-[sub_resource type="Sky" id="Sky_go701"]
-sky_material = SubResource("ProceduralSkyMaterial_a02cp")
+[sub_resource type="Sky" id="Sky_5a7ea"]
+sky_material = SubResource("ProceduralSkyMaterial_go701")
 
-[sub_resource type="Environment" id="Environment_5a7ea"]
+[sub_resource type="Environment" id="Environment_8j60k"]
 background_mode = 2
-sky = SubResource("Sky_go701")
+sky = SubResource("Sky_5a7ea")
 tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a02cp"]
-albedo_color = Color(0.230315, 0.230315, 0.230315, 1)
+albedo_color = Color(0.05485, 0.397407, 0.0116656, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go701"]
-albedo_color = Color(0.0606374, 0.0663422, 0.0639098, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a7ea"]
-albedo_color = Color(0.235294, 0.137255, 0.0941176, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8j60k"]
-albedo_color = Color(0.270455, 0.13123, 0.0191623, 1)
-
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_5a7ea")
+player = NodePath("Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_5a7ea")
+environment = SubResource("Environment_8j60k")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 14.4767, 4.01068, -0.222532)
-light_color = Color(0.66426, 0.673525, 0.891126, 1)
-light_cull_mask = 4293918721
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-shadow_caster_mask = 4293918721
 
 [node name="Player" parent="." instance=ExtResource("1_a02cp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64776, 0.735205)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 4.3, 7.9)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00767708, 0, -0.0253477)
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, -6.13233, 0.83686, 0.45465)
 material_override = SubResource("StandardMaterial3D_a02cp")
 use_collision = true
-size = Vector3(61.9417, 0.002, 81.6699)
+size = Vector3(140.4, 2.9, 116.4)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.2566, 1.62844, -0.0654583)
-material_override = SubResource("StandardMaterial3D_go701")
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4, 6.55, -50.5505)
 use_collision = true
-size = Vector3(0.400635, 3.26257, 36.3779)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.2691, 1.62844, -0.0654583)
-material_override = SubResource("StandardMaterial3D_go701")
-use_collision = true
-size = Vector3(0.400635, 3.26257, 36.3779)
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.7, -4.1, 33.8)
+size = Vector3(49, 8.1, 4.5)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0266581, 1.57549, -17.7839)
-material_override = SubResource("StandardMaterial3D_go701")
-use_collision = true
-size = Vector3(0.400635, 3.15668, 42.0288)
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 49.8, -4.1, 58.75)
+size = Vector3(52.9, 8.1, 4.5)
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0266581, 1.57549, 17.9076)
-material_override = SubResource("StandardMaterial3D_go701")
-use_collision = true
-size = Vector3(0.400635, 3.15668, 42.0288)
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.10001, -2.2, 61.3)
+size = Vector3(51.8, 4.7, 4.5)
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.30222, 0.91351, -7.89954)
-material_override = SubResource("StandardMaterial3D_5a7ea")
-use_collision = true
-size = Vector3(8.57019, 1.8186, 7.94824)
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 46.8, -4.05, 63.2)
+size = Vector3(13.7, 0.4, 1.5)
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.30222, 1.61798, 2.06148)
-material_override = SubResource("StandardMaterial3D_8j60k")
-use_collision = true
-size = Vector3(8.57019, 3.22754, 7.94824)
+[node name="Pizza" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 2.8, 18.7)
+
+[node name="Pizza2" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 2.8, 19.9)
+
+[node name="Pizza3" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 2.8, 18.7)
+
+[node name="Pizza4" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 2.8, 18.7)
+
+[node name="Pizza5" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 2.8, 20.4)
+
+[node name="Pizza Drop off" parent="." instance=ExtResource("4_8j60k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9, 2.9, 9.8)
