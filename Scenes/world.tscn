@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://btm8qp6vtfx1v"]
+[gd_scene load_steps=10 format=3 uid="uid://btm8qp6vtfx1v"]
 
 [ext_resource type="Script" uid="uid://diu1me8pvxxgn" path="res://code/world.gd" id="1_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://dl3uh7rq6crmk" path="res://Scenes/player.tscn" id="1_a02cp"]
 [ext_resource type="PackedScene" uid="uid://cu4d4sul34naq" path="res://Scenes/cylender of doom.tscn" id="2_go701"]
 [ext_resource type="PackedScene" uid="uid://diqnppuuvu2ek" path="res://Scenes/areas/pizza_drop_off.tscn" id="4_8j60k"]
+[ext_resource type="PackedScene" uid="uid://dgk0w5qexmt8m" path="res://Scenes/Vehicles/car.tscn" id="5_fo5ed"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_go701"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -21,9 +22,8 @@ glow_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a02cp"]
 albedo_color = Color(0.05485, 0.397407, 0.0116656, 1)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("player")]
+[node name="World" type="Node3D"]
 script = ExtResource("1_5a7ea")
-player = NodePath("Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8j60k")
@@ -32,33 +32,30 @@ environment = SubResource("Environment_8j60k")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_a02cp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 4.3, 7.9)
-
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, -6.13233, 0.83686, 0.45465)
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 7.4)
 material_override = SubResource("StandardMaterial3D_a02cp")
 use_collision = true
-size = Vector3(140.4, 2.9, 116.4)
+size = Vector3(89.3, 2.9, 123.8)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4, 6.55, -50.5505)
 use_collision = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.7, -4.1, 33.8)
-size = Vector3(49, 8.1, 4.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.85, -3.45, 45.7)
+size = Vector3(38.9, 3.6, 4.5)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 49.8, -4.1, 58.75)
-size = Vector3(52.9, 8.1, 4.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 44.9, -3.4, 67.3)
+size = Vector3(38.6, 3.5, 4.5)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.10001, -2.2, 61.3)
-size = Vector3(51.8, 4.7, 4.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.7, -3.35, 67.95)
+size = Vector3(40.1, 3.4, 4.5)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 46.8, -4.05, 63.2)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41.5, -4.85, 64)
 size = Vector3(13.7, 0.4, 1.5)
 
 [node name="Pizza" parent="." instance=ExtResource("2_go701")]
@@ -78,3 +75,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 2.8, 20.4)
 
 [node name="Pizza Drop off" parent="." instance=ExtResource("4_8j60k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9, 2.9, 9.8)
+
+[node name="Car" parent="." instance=ExtResource("5_fo5ed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 4.6, 4.5)
+
+[node name="Player" parent="." instance=ExtResource("1_a02cp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9, 3.9, 12.9)

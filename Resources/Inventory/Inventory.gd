@@ -21,8 +21,8 @@ func remove_item(item: InvItem) -> void:
 			break
 			
 
-func use_item_at_slot(index: int) -> void:
-	if index < 0 || index >= inv_items.size() || ! inv_items[index]: return
-
-func remove_at_index(index: int) -> void:
-	pass
+#func use_item_at_slot(index: int) -> void:
+	#if index < 0 || index >= inv_items.size() || ! inv_items[index]: return
+#
+#func remove_at_index(index: int) -> void:
+	#pass

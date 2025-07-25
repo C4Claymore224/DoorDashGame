@@ -6,7 +6,6 @@
 
 [node name="Hot_bar_slots" type="Button"]
 custom_minimum_size = Vector2(75, 75)
-anchors_preset = -1
 offset_right = 75.0
 offset_bottom = 75.0
 script = ExtResource("1_uja5l")
