@@ -21,6 +21,7 @@ var bob_time = 0.0
 @onready var stamina_bar: ProgressBar = $"UI/Stamina Bar"
 @onready var place: Label = $UI/place
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var ui_anim: AnimationPlayer = $UI/UI_anim
 
 
 var sensitivity : float = 0.005
@@ -29,9 +30,10 @@ const SPRINT_SPEED: int = 10
 const  WALK_SPEED : int = 6
 const  JUMP_HEIGHT : int = 300
 
-var Max_Stamina: float = 3 
-var stamina: float = 3
+var Max_Stamina: float = 3.0
+var stamina: float = 3.0
 var can_sprint : bool = true
+var max_speed: bool = true
 
 var gravity = 9.1
 
@@ -39,6 +41,7 @@ var mouse_captured : bool = false
 
 # at the start get the mouse
 func _ready() -> void:
+	inv.inv_items.resize(5)
 	stamina_bar.max_value = Max_Stamina
 	capture_mouse()
 
@@ -58,12 +61,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if GameManager.player_active:
 		camera_3d.make_current()
+		stamina_bar.value = stamina
+		stamina_bar.show()
 		if stamina >= Max_Stamina:
 			stamina = Max_Stamina
+			
+				
 			if !can_sprint:
 				can_sprint = true
-		stamina_bar.value = stamina
-		
 		# interact by looking at things
 		if lookcast.is_colliding():
 			var target = lookcast.get_collider()
@@ -73,20 +78,26 @@ func _physics_process(delta: float) -> void:
 					target.collect(inv)
 			else:
 				$UI/pickup.hide()
-			if target != null and target.has_method("take_item"):
+			if target != null and target.has_method("drop_off"):
 				place.show()
 				if Input.is_action_just_pressed("interact"):
-					target.take_item(inv)
+					target.drop_off(inv)
 			else:
 				place.hide()
 				
 			if target != null and target.has_method("get_player"):
+				# put text here or sum
 				pass
 				if Input.is_action_just_pressed("interact"):
 					GameManager.player_active = false
 					GameManager.car_active = true
 					target.get_player(self)
 					collision_shape_3d.disabled = true
+			if target != null and target.has_method("take_item"):
+				# put text here or sum
+				pass
+				if Input.is_action_just_pressed("playerclick"):
+					target.take_item(inv)
 			else:
 				pass
 		
@@ -115,7 +126,7 @@ func _physics_process(delta: float) -> void:
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3)
 		
 		
-		#handle sprint
+		# handle sprint
 		if Input.is_action_pressed("Sprint") and direction:
 			if can_sprint:
 				speed = SPRINT_SPEED
@@ -129,7 +140,7 @@ func _physics_process(delta: float) -> void:
 			speed = WALK_SPEED
 			stamina += delta
 		
-		#HeadBob <-- use hashtoday!
+		#HeadBob <-- use hashtag today!
 		bob_time += delta * velocity.length() * float(is_on_floor())
 		camera_3d.transform.origin = _head_bob(bob_time)
 		
@@ -138,7 +149,7 @@ func _physics_process(delta: float) -> void:
 
 		move_and_slide()
 	else:
-		pass
+		stamina_bar.hide()
 
 # camera head bob function
 func _head_bob(time) -> Vector3:

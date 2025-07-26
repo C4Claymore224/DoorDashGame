@@ -7,4 +7,5 @@
 script = ExtResource("1_8ggim")
 display = ExtResource("1_3hjh5")
 name = "Pizza"
+gass_amount = 2
 metadata/_custom_type_script = "uid://desfnl2axl7ab"
