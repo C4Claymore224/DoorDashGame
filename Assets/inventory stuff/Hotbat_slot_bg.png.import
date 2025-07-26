@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq2dc2sdf8rf8"
-path="res://.godot/imported/Pizza.png-e36dbb37716e4f2d40156963a4634aa0.ctex"
+uid="uid://c2o8ipgrbqyf1"
+path="res://.godot/imported/Hotbat_slot_bg.png-171d2a8cde2ed9abbf0fed02436878e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Pizza.png"
-dest_files=["res://.godot/imported/Pizza.png-e36dbb37716e4f2d40156963a4634aa0.ctex"]
+source_file="res://Assets/inventory stuff/Hotbat_slot_bg.png"
+dest_files=["res://.godot/imported/Hotbat_slot_bg.png-171d2a8cde2ed9abbf0fed02436878e1.ctex"]
 
 [params]
 

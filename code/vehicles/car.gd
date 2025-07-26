@@ -15,8 +15,8 @@ const REGULAR_SPEED = 300
 @onready var player_spot: Marker3D = $player_spot
 @onready var gas: ProgressBar = $"Car Hud/Gas"
 
-var max_tank_gas: float = 10
-var gas_in_tank: float = 10
+var max_tank_gas: float = 15
+var gas_in_tank: float = 15
 var can_drive: bool = true
 
 var player
@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 		camera_pivot.global_position = camera_pivot.global_position.lerp(global_position, delta * 20.0)
 		camera_pivot.transform = camera_pivot.transform.interpolate_with(transform, delta * 5.0)
 		if Input.is_action_just_pressed("use item"):
-				exit_car()
+				exit_car() # player leaves car
 		if can_drive:
 			Engine_Power = REGULAR_SPEED
 			if engine_force:
@@ -56,7 +56,7 @@ func exit_car() -> void:
 	GameManager.player_active = true
 	player.collision_shape_3d.disabled = false
 	player.global_position = player_spot.global_position
-	Engine_Power = STOP
+	can_drive = false
 
 func get_player(vessl: Player):
 	player = vessl
@@ -66,10 +66,10 @@ func take_item(inv: Inventory):
 	for i in inv.inv_items.size():
 		if inv.inv_items[i]:
 			add_gas(inv.inv_items[i])
-			inv.remove_item(inv.inv_items[i])
+			inv.remove_at_space(GameManager.slot_selected)
 			break
 	
 func add_gas(item: InvItem) -> void:
 	match item.name:
 		"Pizza":
-			gas_in_tank += item.gass_amount
+			gas_in_tank += item.gas_amount

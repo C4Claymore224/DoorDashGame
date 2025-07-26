@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd45jotwth07j"
-path="res://.godot/imported/crosshare.png-c73b4bda993dc483e507b3fba7bded4c.ctex"
+uid="uid://ce80f01bcu8au"
+path="res://.godot/imported/no_item.png-0e17c0e5588cac1789f8c4a4b42fdfdc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/crosshare.png"
-dest_files=["res://.godot/imported/crosshare.png-c73b4bda993dc483e507b3fba7bded4c.ctex"]
+source_file="res://Assets/inventory stuff/no_item.png"
+dest_files=["res://.godot/imported/no_item.png-0e17c0e5588cac1789f8c4a4b42fdfdc.ctex"]
 
 [params]
 

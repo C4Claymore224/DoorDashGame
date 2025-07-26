@@ -22,6 +22,7 @@ var bob_time = 0.0
 @onready var place: Label = $UI/place
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var ui_anim: AnimationPlayer = $UI/UI_anim
+@onready var health_bar: ProgressBar = $"UI/Health Bar"
 
 
 var sensitivity : float = 0.005
@@ -29,6 +30,9 @@ var speed: int
 const SPRINT_SPEED: int = 10
 const  WALK_SPEED : int = 6
 const  JUMP_HEIGHT : int = 300
+
+var Max_Health: float = 100.0
+var health: float = 50.0
 
 var Max_Stamina: float = 3.0
 var stamina: float = 3.0
@@ -43,6 +47,7 @@ var mouse_captured : bool = false
 func _ready() -> void:
 	inv.inv_items.resize(5)
 	stamina_bar.max_value = Max_Stamina
+	health_bar.max_value = Max_Health
 	capture_mouse()
 
 # Player Mouse camera movement
@@ -62,6 +67,7 @@ func _physics_process(delta: float) -> void:
 	if GameManager.player_active:
 		camera_3d.make_current()
 		stamina_bar.value = stamina
+		health_bar.value = health
 		stamina_bar.show()
 		if stamina >= Max_Stamina:
 			stamina = Max_Stamina
@@ -146,6 +152,7 @@ func _physics_process(delta: float) -> void:
 		
 		if bob_time >= 25:
 			bob_time = 0
+		
 
 		move_and_slide()
 	else:
@@ -166,3 +173,8 @@ func release_mouse() -> void:
 func capture_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	mouse_captured = true
+
+## POWERUPS
+
+func pizza_health_up(item: InvItem):
+	health += item.health_plus

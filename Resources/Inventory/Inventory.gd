@@ -2,11 +2,10 @@ extends Resource
 class_name Inventory
 
 signal updated
-#signal inv_full
 
 @export var inv_items: Array[InvItem] = []
 
-
+# inserts item into inv
 func add_item(item: InvItem) -> void:
 	for i in range(inv_items.size()):# go over every space in the inventory
 		if !inv_items[i]: # if there is nothing in the space
@@ -24,10 +23,10 @@ func remove_item(item: InvItem) -> void:
 		else:
 			continue
 
-			
-
-#func use_item_at_slot(index: int) -> void:
-	#if index < 0 || index >= inv_items.size() || ! inv_items[index]: return
-#
-#func remove_at_index(index: int) -> void:
-	#pass
+## better version of the remove item func
+func remove_at_space(index: int) -> void:
+	if inv_items[index]: # inventory space
+		inv_items[index] = null # takes out item
+		updated.emit() # updates the ui
+	else:
+		print("nothin")
