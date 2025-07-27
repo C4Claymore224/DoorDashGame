@@ -8,16 +8,20 @@ var SPEED : float = 5.0
 var JUMP_VELOCITY :float  = 4.5
 var gravity: float = 9.2
 
-var player : Player
-var direction: Vector3
+var target : Player
+var direction
 
 func _physics_process(delta: float) -> void:
-	if player:
-		direction = player.global_position
-		look_at(direction)
+	if target:
+		look_at(target.global_position)
+		direction = target.global_position - global_position
+		velocity = direction.normalized() * SPEED
+	else:
+		pass
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+	
 		
 	#velocity.y = JUMP_VELOCITY
 	#if direction:
@@ -32,4 +36,13 @@ func _physics_process(delta: float) -> void:
 
 func _on_detection_zone_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Player"):
-		player = body
+		target = body
+
+func follow_player() -> void:
+	direction = target.global_position - global_position
+	var NewSpeed = direction.normalized() * SPEED
+	velocity = NewSpeed
+	look_at(direction)
+
+func wonder_around():
+	pass

@@ -1,11 +1,8 @@
 extends CharacterBody3D
 class_name Player
 
-
-## Notes for future player additons
-#	have the player hold the item for example a pizza
-#	make some kind of weapon
-#	
+# TODO: Add visual to what your freaking holding 
+# TODO: Add a weapon
 
 # head bobble stuff
 const BOB_FREQ = 1.5
@@ -14,21 +11,22 @@ var bob_time = 0.0
 
 @export var inv : Inventory
 
+@onready var ui_anim: AnimationPlayer = $UI/ui_anim
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
 @onready var lookcast: RayCast3D = $Head/Camera3D/lookcast
 @onready var hand: Node3D = $Head/hand
 @onready var stamina_bar: ProgressBar = $"UI/Stamina Bar"
+@onready var health_bar: ProgressBar = $"UI/Health Bar"
 @onready var place: Label = $UI/place
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var ui_anim: AnimationPlayer = $UI/UI_anim
-@onready var health_bar: ProgressBar = $"UI/Health Bar"
+@onready var player_audio: AudioStreamPlayer3D = $player_audio
 
 
 var sensitivity : float = 0.005
 var speed: int
-const SPRINT_SPEED: int = 10
-const  WALK_SPEED : int = 6
+var SPRINT_SPEED: int = 10
+var  WALK_SPEED : int = 6
 const  JUMP_HEIGHT : int = 300
 
 var Max_Health: float = 100.0
@@ -49,7 +47,7 @@ func _ready() -> void:
 	stamina_bar.max_value = Max_Stamina
 	health_bar.max_value = Max_Health
 	capture_mouse()
-
+	
 # Player Mouse camera movement
 func _unhandled_input(event: InputEvent) -> void:
 	if mouse_captured and event is InputEventMouseMotion:
@@ -71,10 +69,9 @@ func _physics_process(delta: float) -> void:
 		stamina_bar.show()
 		if stamina >= Max_Stamina:
 			stamina = Max_Stamina
-			
-				
 			if !can_sprint:
 				can_sprint = true
+				
 		# interact by looking at things
 		if lookcast.is_colliding():
 			var target = lookcast.get_collider()
@@ -90,9 +87,15 @@ func _physics_process(delta: float) -> void:
 					target.drop_off(inv)
 			else:
 				place.hide()
+			if target != null and target.has_method("give_item"):
+				place.show()
+				if Input.is_action_just_pressed("interact"):
+					target.give_item(inv)
+			else:
+				place.hide()
 				
 			if target != null and target.has_method("get_player"):
-				# put text here or sum
+				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("interact"):
 					GameManager.player_active = false
@@ -100,7 +103,7 @@ func _physics_process(delta: float) -> void:
 					target.get_player(self)
 					collision_shape_3d.disabled = true
 			if target != null and target.has_method("take_item"):
-				# put text here or sum
+				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("playerclick"):
 					target.take_item(inv)
@@ -125,12 +128,12 @@ func _physics_process(delta: float) -> void:
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
 			else:
+				update_audio("walking") # HACK: if im not walking play audio????????? i guess????????? idk why this kinds works 
 				velocity.x = 0
 				velocity.z = 0
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 3)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3)
-		
 		
 		# handle sprint
 		if Input.is_action_pressed("Sprint") and direction:
@@ -145,7 +148,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			speed = WALK_SPEED
 			stamina += delta
-		
 		#HeadBob <-- use hashtag today!
 		bob_time += delta * velocity.length() * float(is_on_floor())
 		camera_3d.transform.origin = _head_bob(bob_time)
@@ -153,7 +155,6 @@ func _physics_process(delta: float) -> void:
 		if bob_time >= 25:
 			bob_time = 0
 		
-
 		move_and_slide()
 	else:
 		stamina_bar.hide()
@@ -176,5 +177,31 @@ func capture_mouse() -> void:
 
 ## POWERUPS
 
-func pizza_health_up(item: InvItem):
+func pizza_health_up(item: InvItem) -> void:
 	health += item.health_plus
+
+func soda_speed_up(item:InvItem) -> void:
+	$UI/Speedeffect.visible = true
+	SPRINT_SPEED += item.speed_plus
+	WALK_SPEED += item.speed_plus
+	ui_anim.play("come_in")
+	$Timers/speed_timer.start(item.pow_time)
+
+
+func _on_ui_anim_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"come_in":
+			ui_anim.play("speed effect")
+			
+
+func _on_speed_timer_timeout() -> void:
+	ui_anim.play("leave")
+	SPRINT_SPEED = 10
+	WALK_SPEED = 6
+
+func update_audio(audio_name: String) -> void:
+	match audio_name:
+		"walking":
+			player_audio.playing = true
+		"stop":
+			player_audio.playing = false

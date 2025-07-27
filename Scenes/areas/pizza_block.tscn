@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgvwbf8iwxlsu"]
+
+[ext_resource type="Script" uid="uid://dxiptl7q66e55" path="res://code/area/pizza_block.gd" id="1_fcgos"]
+[ext_resource type="Resource" uid="uid://dx28weynwefm2" path="res://Resources/Inventory/Items/pizza.tres" id="2_oayap"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcgos"]
+albedo_color = Color(0.86, 0.36679, 0.0602, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ypih8"]
+material = SubResource("StandardMaterial3D_fcgos")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fcgos"]
+
+[node name="Pizza Block" type="StaticBody3D"]
+script = ExtResource("1_fcgos")
+item = ExtResource("2_oayap")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ypih8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fcgos")

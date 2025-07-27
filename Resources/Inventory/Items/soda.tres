@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InvItem" load_steps=3 format=3 uid="uid://dl1iraw3yku76"]
+
+[ext_resource type="Script" uid="uid://desfnl2axl7ab" path="res://Resources/Inventory/Items/Inv_Item.gd" id="1_hxwnn"]
+[ext_resource type="Texture2D" uid="uid://clahira12tsv2" path="res://Assets/items/Soda.png" id="1_s7uwq"]
+
+[resource]
+script = ExtResource("1_hxwnn")
+display = ExtResource("1_s7uwq")
+name = "Soda"
+gas_amount = 0
+pow_time = 5.0
+health_plus = 0
+speed_plus = 5
+metadata/_custom_type_script = "uid://desfnl2axl7ab"

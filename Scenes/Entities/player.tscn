@@ -1,14 +1,30 @@
-[gd_scene load_steps=14 format=3 uid="uid://dl3uh7rq6crmk"]
+[gd_scene load_steps=22 format=3 uid="uid://dl3uh7rq6crmk"]
 
 [ext_resource type="Script" uid="uid://oudm3hveajgo" path="res://code/Entities/player.gd" id="1_v0iea"]
 [ext_resource type="Resource" uid="uid://nsrcjlvlnkhe" path="res://Resources/Inventory/Inventories/PlayerInv.tres" id="2_6t5aa"]
 [ext_resource type="Texture2D" uid="uid://dd45jotwth07j" path="res://Assets/inventory stuff/crosshare.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://de10v2twb1ca0" path="res://code/Shaders & Effect layers/player_ui.gd" id="3_2hnfo"]
 [ext_resource type="PackedScene" uid="uid://niyvg1wuc8r" path="res://Resources/Inventory/hot_bar.tscn" id="4_vgqql"]
 [ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Resources/UI_Theme.tres" id="5_fkybt"]
+[ext_resource type="Texture2D" uid="uid://goud0fjt10hu" path="res://Assets/items/Swirl_01-128x128.png" id="5_y18yp"]
+[ext_resource type="Shader" uid="uid://bbohqiak5a0ku" path="res://code/Shaders & Effect layers/effect.gdshader" id="6_yqx0t"]
+[ext_resource type="AudioStream" uid="uid://yeiq0c4wn6xq" path="res://Assets/Sounds/Metal Footsteps (3).mp3" id="9_85s6f"]
+[ext_resource type="AudioStream" uid="uid://bujqsr4ms4gmk" path="res://Assets/Sounds/footsteps_on_common_surface-40449.mp3" id="9_y18yp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85s6f"]
+shader = ExtResource("6_yqx0t")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/noise = ExtResource("5_y18yp")
+shader_parameter/sample_radius = 0.0
+shader_parameter/line_color = Color(0.408881, 0.263837, 0.0979652, 1)
+shader_parameter/center_radius = 0.5
+shader_parameter/hole_smoothness = 0.4
+shader_parameter/hole_radius = 0.34
+shader_parameter/transparency = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1rq5"]
 bg_color = Color(0.184214, 0.00439858, 0.00436981, 1)
@@ -24,58 +40,108 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="Animation" id="Animation_x3wgy"]
+[sub_resource type="Animation" id="Animation_y18yp"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Stamina Bar:self_modulate")
+tracks/0/path = NodePath("Speedeffect:material:shader_parameter/sample_radius")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speedeffect:material:shader_parameter/line_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.408881, 0.263837, 0.0979652, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_3smsa"]
-resource_name = "stam_come_in"
+[sub_resource type="Animation" id="Animation_ofjh0"]
+resource_name = "come_in"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Stamina Bar:self_modulate")
+tracks/0/path = NodePath("Speedeffect:material:shader_parameter/line_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(0.41, 0.264587, 0.0984, 0), Color(0.788235, 0.709804, 0.639216, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_fkybt"]
-resource_name = "stam_fade_out"
-length = 1.5
+[sub_resource type="Animation" id="Animation_85s6f"]
+resource_name = "leave"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Stamina Bar:self_modulate")
+tracks/0/path = NodePath("Speedeffect:material:shader_parameter/line_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(0.79, 0.709947, 0.6399, 1), Color(0.41, 0.264587, 0.0984, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3smsa"]
+[sub_resource type="Animation" id="Animation_2hnfo"]
+resource_name = "speed effect"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speedeffect:material:shader_parameter/sample_radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85s6f"]
 _data = {
-&"RESET": SubResource("Animation_x3wgy"),
-&"stam_come_in": SubResource("Animation_3smsa"),
-&"stam_fade_out": SubResource("Animation_fkybt")
+&"RESET": SubResource("Animation_y18yp"),
+&"come_in": SubResource("Animation_ofjh0"),
+&"leave": SubResource("Animation_85s6f"),
+&"speed effect": SubResource("Animation_2hnfo")
+}
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_y18yp"]
+clip_count = 1
+clip_0/name = &"walking"
+clip_0/stream = ExtResource("9_85s6f")
+clip_0/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 0,
+"to_time": 0
+},
+Vector2i(-1, 0): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 0,
+"to_time": 0
+}
 }
 
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
@@ -103,6 +169,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269299, -0.522473, -0.56461
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = -10
+script = ExtResource("3_2hnfo")
+
+[node name="Speedeffect" type="ColorRect" parent="UI"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_85s6f")
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchors_preset = 15
@@ -163,7 +237,24 @@ value = 50.0
 fill_mode = 3
 show_percentage = false
 
-[node name="UI_anim" type="AnimationPlayer" parent="UI"]
+[node name="ui_anim" type="AnimationPlayer" parent="UI"]
 libraries = {
-&"": SubResource("AnimationLibrary_3smsa")
+&"": SubResource("AnimationLibrary_85s6f")
 }
+
+[node name="Timers" type="Node3D" parent="."]
+
+[node name="speed_timer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="player_audio" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamInteractive_y18yp")
+volume_db = -36.154
+pitch_scale = 1.35
+
+[node name="FootstepsOnCommonSurface-40449" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_y18yp")
+pitch_scale = 1.15
+
+[connection signal="animation_finished" from="UI/ui_anim" to="." method="_on_ui_anim_animation_finished"]
+[connection signal="timeout" from="Timers/speed_timer" to="." method="_on_speed_timer_timeout"]

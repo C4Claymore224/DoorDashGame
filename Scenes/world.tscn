@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://btm8qp6vtfx1v"]
+[gd_scene load_steps=13 format=3 uid="uid://btm8qp6vtfx1v"]
 
 [ext_resource type="Script" uid="uid://diu1me8pvxxgn" path="res://code/Scenes/world.gd" id="1_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://dl3uh7rq6crmk" path="res://Scenes/Entities/player.tscn" id="1_a02cp"]
-[ext_resource type="PackedScene" uid="uid://cu4d4sul34naq" path="res://Scenes/pizza_pickup.tscn" id="2_go701"]
 [ext_resource type="PackedScene" uid="uid://diqnppuuvu2ek" path="res://Scenes/areas/pizza_drop_off.tscn" id="4_8j60k"]
 [ext_resource type="PackedScene" uid="uid://dgk0w5qexmt8m" path="res://Scenes/Vehicles/car.tscn" id="5_fo5ed"]
 [ext_resource type="PackedScene" uid="uid://vec1s5nopvuo" path="res://Scenes/Entities/enemy.tscn" id="6_5ukr8"]
+[ext_resource type="PackedScene" uid="uid://bgvwbf8iwxlsu" path="res://Scenes/areas/pizza_block.tscn" id="6_o06y3"]
+[ext_resource type="PackedScene" uid="uid://x0uvmo8crku7" path="res://Scenes/areas/drink_block.tscn" id="7_k7acu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_go701"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -72,26 +73,11 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.2
 [node name="Enemy" parent="." instance=ExtResource("6_5ukr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7, 4, 21.5)
 
-[node name="Pizza" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9, 3.7, -16.6)
-
-[node name="Pizza2" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 3.6, -16.9)
-
-[node name="Pizza3" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 2.8, -16.8)
-
-[node name="Pizza4" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 2.9, -16.7)
-
-[node name="Pizza5" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 3.2, -16.3)
-
-[node name="Pizza6" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2.8, -16)
-
-[node name="Pizza7" parent="." instance=ExtResource("2_go701")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8, 5.3, -16.6)
-
 [node name="Pizza Drop off" parent="." instance=ExtResource("4_8j60k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2, -5.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87295, 2.41596, -16.5352)
+
+[node name="Pizza Block" parent="." instance=ExtResource("6_o06y3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.02958, 2.44455, -16.4697)
+
+[node name="drink_block" parent="." instance=ExtResource("7_k7acu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.457461, 2.41059, -16.5821)

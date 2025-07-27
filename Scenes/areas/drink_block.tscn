@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://x0uvmo8crku7"]
+
+[ext_resource type="Script" uid="uid://b2tpi5qp5t8is" path="res://code/area/drink_block.gd" id="1_uqscq"]
+[ext_resource type="Resource" uid="uid://dl1iraw3yku76" path="res://Resources/Inventory/Items/soda.tres" id="2_fhdoh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifh8d"]
+albedo_color = Color(0.701244, 0.610873, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uqscq"]
+material = SubResource("StandardMaterial3D_ifh8d")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhdoh"]
+
+[node name="drink_block" type="StaticBody3D"]
+script = ExtResource("1_uqscq")
+item = ExtResource("2_fhdoh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_uqscq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fhdoh")

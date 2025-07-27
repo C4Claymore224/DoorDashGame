@@ -1,6 +1,8 @@
 extends VehicleBody3D
 class_name Automobile
 
+# FIXME: pizza not refilling gas
+
 const STOP = 0
 const REGULAR_SPEED = 300
 
@@ -15,8 +17,8 @@ const REGULAR_SPEED = 300
 @onready var player_spot: Marker3D = $player_spot
 @onready var gas: ProgressBar = $"Car Hud/Gas"
 
-var max_tank_gas: float = 15
-var gas_in_tank: float = 15
+var max_tank_gas: float = 20
+var gas_in_tank: float = 18
 var can_drive: bool = true
 
 var player
@@ -40,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		engine_force = Input.get_axis("frount", "back") * Engine_Power # moves car
 		camera_pivot.global_position = camera_pivot.global_position.lerp(global_position, delta * 20.0)
 		camera_pivot.transform = camera_pivot.transform.interpolate_with(transform, delta * 5.0)
-		if Input.is_action_just_pressed("use item"):
+		if Input.is_action_just_pressed("leave car"):
 				exit_car() # player leaves car
 		if can_drive:
 			Engine_Power = REGULAR_SPEED
@@ -73,3 +75,5 @@ func add_gas(item: InvItem) -> void:
 	match item.name:
 		"Pizza":
 			gas_in_tank += item.gas_amount
+		"Soda":
+			print("car like soda")
