@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Enem_Type" load_steps=2 format=3 uid="uid://bwejtvvckrx3w"]
+
+[ext_resource type="Script" uid="uid://dvhwgf1mva2j" path="res://Resources/Enemys/enem_type.gd" id="1_ihk2f"]
+
+[resource]
+script = ExtResource("1_ihk2f")
+name = "zombo"
+speed = 5.0
+jump_height = 3.7
+damage = 5.5
+attack_range = 1.7
+stop_persuit = 5.0
+metadata/_custom_type_script = "uid://dvhwgf1mva2j"

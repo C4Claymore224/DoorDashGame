@@ -37,8 +37,6 @@ var stamina: float = 3.0
 var can_sprint : bool = true
 var max_speed: bool = true
 
-var gravity = 9.1
-
 var mouse_captured : bool = false
 
 # at the start get the mouse
@@ -112,7 +110,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Add the gravity.
 		if not is_on_floor():
-			velocity.y -= gravity * delta
+			velocity += get_gravity() * delta
 
 		# Handle jump
 		if Input.is_action_just_pressed("jump") and is_on_floor():
