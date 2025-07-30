@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=4 format=3 uid="uid://b1ifrma6ssvpf"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=3 format=3 uid="uid://b1ifrma6ssvpf"]
 
 [ext_resource type="Script" uid="uid://desfnl2axl7ab" path="res://Resources/Inventory/Items/Inv_Item.gd" id="1_vw1h5"]
-[ext_resource type="Resource" uid="uid://dx28weynwefm2" path="res://Resources/Inventory/Items/pizza.tres" id="2_wro3m"]
 [ext_resource type="Script" uid="uid://d28mahhoa7aac" path="res://Resources/Inventory/Inventory.gd" id="2_x57u1"]
 
 [resource]
 script = ExtResource("2_x57u1")
-inv_items = Array[ExtResource("1_vw1h5")]([ExtResource("2_wro3m")])
+inv_items = Array[ExtResource("1_vw1h5")]([null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://d28mahhoa7aac"

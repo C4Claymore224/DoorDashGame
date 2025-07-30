@@ -9,5 +9,5 @@ speed = 5.0
 jump_height = 3.7
 damage = 5.5
 attack_range = 1.7
-stop_persuit = 5.0
+stop_persuit = 25.0
 metadata/_custom_type_script = "uid://dvhwgf1mva2j"

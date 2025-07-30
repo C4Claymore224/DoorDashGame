@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Steps_floor-009.ogg-aaed4bfbab0ed9d208609782d
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

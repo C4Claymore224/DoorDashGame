@@ -6,6 +6,7 @@ class_name Hotbar
 @onready var slots : Array = $contaner.get_children()
 @onready var selector: Sprite2D = $Selector
 
+var vehicle: Automobile 
 
 
 func _ready() -> void:
@@ -81,9 +82,10 @@ func vehicle_use_picked_item():
 		if item:
 			match item.name:
 				"Pizza":
-					print("heal car")
+					GameManager.car_selected.use_powerup(item)
 					inv.remove_at_space(GameManager.slot_selected)
 				"Soda":
-					print("car go vroom")
+					GameManager.car_selected.use_powerup(item)
+					inv.remove_at_space(GameManager.slot_selected)
 		else:
-			pass
+			print("nuh uh lil bro")

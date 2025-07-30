@@ -18,7 +18,6 @@ var bob_time = 0.0
 @onready var hand: Node3D = $Head/hand
 @onready var stamina_bar: ProgressBar = $"UI/Stamina Bar"
 @onready var health_bar: ProgressBar = $"UI/Health Bar"
-@onready var place: Label = $UI/place
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var player_audio: AudioStreamPlayer3D = $player_audio
 
@@ -65,6 +64,7 @@ func _physics_process(delta: float) -> void:
 		stamina_bar.value = stamina
 		health_bar.value = health
 		stamina_bar.show()
+		health_bar.show()
 		if stamina >= Max_Stamina:
 			stamina = Max_Stamina
 			if !can_sprint:
@@ -73,26 +73,26 @@ func _physics_process(delta: float) -> void:
 		# interact by looking at things
 		if lookcast.is_colliding():
 			var target = lookcast.get_collider()
-			if target != null and target.has_method("collect"):
-				$UI/pickup.show()
+			if target != null and target.has_method("collect"): # drop off
+				$UI/pickup.visible = true
 				if Input.is_action_just_pressed("interact"):
 					target.collect(inv)
 			else:
-				$UI/pickup.hide()
-			if target != null and target.has_method("drop_off"):
-				place.show()
+				$UI/pickup.visible = false
+			if target != null and target.has_method("drop_off"): # take item out of inv
+				$UI/place.visible = true
 				if Input.is_action_just_pressed("interact"):
 					target.drop_off(inv)
 			else:
-				place.hide()
-			if target != null and target.has_method("give_item"):
-				place.show()
+				$UI/place.visible = false
+			if target != null and target.has_method("give_item"): # pick up item
+				$UI/pickup.visible = true
 				if Input.is_action_just_pressed("interact"):
 					target.give_item(inv)
 			else:
-				place.hide()
+				$UI/pickup.visible = false
 				
-			if target != null and target.has_method("get_player"):
+			if target != null and target.has_method("get_player"): # get in car
 				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("interact"):
@@ -100,14 +100,19 @@ func _physics_process(delta: float) -> void:
 					GameManager.car_active = true
 					target.get_player(self)
 					collision_shape_3d.disabled = true
-			if target != null and target.has_method("take_item"):
+					global_position = target.global_position
+					
+			if target != null and target.has_method("take_item"): # fueling car
 				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("playerclick"):
 					target.take_item(inv)
 			else:
-				pass
-		
+				pass 
+		else:
+			$UI/pickup.visible = false
+			$UI/place.visible = false
+				
 		# Add the gravity.
 		if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -125,8 +130,9 @@ func _physics_process(delta: float) -> void:
 			if direction:
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
+				update_audio("walking")
 			else:
-				update_audio("walking") # HACK: if im not walking play audio????????? i guess????????? idk why this kinds works 
+				 # HACK: if im not walking play audio????????? i guess????????? idk why this kinds works 
 				velocity.x = 0
 				velocity.z = 0
 		else:
@@ -156,6 +162,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	else:
 		stamina_bar.hide()
+		health_bar.hide()
 
 # camera head bob function
 func _head_bob(time) -> Vector3:
@@ -200,6 +207,9 @@ func _on_speed_timer_timeout() -> void:
 func update_audio(audio_name: String) -> void:
 	match audio_name:
 		"walking":
-			player_audio.playing = true
+			pass
 		"stop":
-			player_audio.playing = false
+			pass
+
+func _on_player_audio_finished() -> void:
+	print("done")
