@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dgk0w5qexmt8m"]
 
-[ext_resource type="Script" uid="uid://dbqt4dm40uo5p" path="res://code/vehicles/car.gd" id="1_p7pfu"]
-[ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Resources/UI_Theme.tres" id="2_ovntf"]
+[ext_resource type="Script" uid="uid://dbqt4dm40uo5p" path="res://Code/vehicles/car.gd" id="1_p7pfu"]
+[ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="2_ovntf"]
 [ext_resource type="Resource" uid="uid://b1ifrma6ssvpf" path="res://Resources/Inventory/Inventories/car_storage.tres" id="2_vin2h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2ng7n"]

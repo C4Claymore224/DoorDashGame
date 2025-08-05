@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		can_drive = true
 	if health >= max_health:
 		health = max_health
-	if health <= 0:
+	if health <= 0: 
 		print("dead")
 	if GameManager.car_active:
 		GameManager.player_in_vehicle(self)
@@ -83,27 +83,27 @@ func get_player(vessl: Player):
 	player = vessl
 	
 func take_item(inv: Inventory):
-	for i in inv.inv_items.size():
-		if inv.inv_items[GameManager.slot_selected]:
-			add_gas(inv.inv_items[GameManager.slot_selected])
+	for i in inv.slots.size():
+		if inv.slots[GameManager.slot_selected]:
+			add_gas(inv.slots[GameManager.slot_selected])
 			inv.remove_at_space(GameManager.slot_selected)
 			break
 
-func add_gas(item: InvItem) -> void:
-	match item.name:
+func add_gas(slot: InvSlot) -> void:
+	match slot.item.name:
 		"Pizza":
-			gas_in_tank += item.gas_amount
+			gas_in_tank += slot.item.gas_amount
 			print(gas_in_tank)
 		"Soda":
-			gas_in_tank += item.gas_amount
+			gas_in_tank += slot.item.gas_amount
 			print(gas_in_tank)
 
-func use_powerup(item: InvItem):
-	match item.name:
+func use_powerup(slot: InvSlot):
+	match slot.item.name:
 		"Pizza":
-			health += item.health_plus
+			health += slot.item.health_plus
 		"Soda":
-			Engine_Power += item.health_plus
+			Engine_Power += slot.item.health_plus
 			speed_pow_timer.start()
 
 func _on_speed_pow_timer_timeout() -> void:

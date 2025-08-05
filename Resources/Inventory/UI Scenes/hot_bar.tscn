@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://niyvg1wuc8r"]
+
+[ext_resource type="Script" uid="uid://dj6dckamcmhte" path="res://Resources/Inventory/UI Scenes/Code/hot_bar.gd" id="1_4rt4i"]
+[ext_resource type="Resource" uid="uid://nsrcjlvlnkhe" path="res://Resources/Inventory/Inventories/PlayerInv.tres" id="2_bjxgc"]
+[ext_resource type="PackedScene" uid="uid://c46a8q7n27ldm" path="res://Resources/Inventory/UI Scenes/hot_bar_slots.tscn" id="2_lcqmx"]
+[ext_resource type="Texture2D" uid="uid://wq56oux1fndf" path="res://Assets/inv ui/selector.png" id="3_lcqmx"]
+
+[node name="Hotbar" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -195.5
+offset_top = -75.0
+offset_right = 195.5
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_4rt4i")
+inv = ExtResource("2_bjxgc")
+
+[node name="contaner" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -196.5
+offset_top = -76.0
+offset_right = 196.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Hot_bar_slots" parent="contaner" instance=ExtResource("2_lcqmx")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Hot_bar_slots2" parent="contaner" instance=ExtResource("2_lcqmx")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Hot_bar_slots3" parent="contaner" instance=ExtResource("2_lcqmx")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Hot_bar_slots4" parent="contaner" instance=ExtResource("2_lcqmx")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Hot_bar_slots5" parent="contaner" instance=ExtResource("2_lcqmx")]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Selector" type="Sprite2D" parent="."]
+position = Vector2(314.5, -2)
+scale = Vector2(2.375, 2.375)
+texture = ExtResource("3_lcqmx")
+centered = false

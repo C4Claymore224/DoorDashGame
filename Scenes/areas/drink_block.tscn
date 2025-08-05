@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://x0uvmo8crku7"]
 
-[ext_resource type="Script" uid="uid://b2tpi5qp5t8is" path="res://code/area/drink_block.gd" id="1_uqscq"]
+[ext_resource type="Script" uid="uid://b2tpi5qp5t8is" path="res://Code/area/drink_block.gd" id="1_uqscq"]
 [ext_resource type="Resource" uid="uid://dl1iraw3yku76" path="res://Resources/Inventory/Items/soda.tres" id="2_fhdoh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifh8d"]

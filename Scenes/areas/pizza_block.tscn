@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bgvwbf8iwxlsu"]
 
-[ext_resource type="Script" uid="uid://dxiptl7q66e55" path="res://code/area/pizza_block.gd" id="1_fcgos"]
+[ext_resource type="Script" uid="uid://dxiptl7q66e55" path="res://Code/area/pizza_block.gd" id="1_fcgos"]
 [ext_resource type="Resource" uid="uid://dx28weynwefm2" path="res://Resources/Inventory/Items/pizza.tres" id="2_oayap"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcgos"]

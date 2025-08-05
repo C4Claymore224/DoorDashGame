@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 		if seeing_player:
 			follow_target()
 	else:
-		stop()
+		pass
 		
 	if sight.is_colliding():
 		var sight_body = sight.get_collider()
@@ -68,6 +68,7 @@ func _on_detection_zone_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Player"):
 		target = body
 
+
 # follow target
 func follow_target() -> void:
 	if target:
@@ -83,4 +84,6 @@ func attack():
 
 # the stoping of the chase
 func stop():
-	pass
+	target = null
+	position = Vector3(-9,2,16)
+	velocity = Vector3(0,0,0)

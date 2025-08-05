@@ -15,17 +15,14 @@ var bob_time = 0.0
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
 @onready var lookcast: RayCast3D = $Head/Camera3D/lookcast
-@onready var hand: Node3D = $Head/hand
 @onready var stamina_bar: ProgressBar = $"UI/Stamina Bar"
 @onready var health_bar: ProgressBar = $"UI/Health Bar"
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var player_audio: AudioStreamPlayer3D = $player_audio
-
 
 var sensitivity : float = 0.005
-var speed: int
-var SPRINT_SPEED: int = 10
-var  WALK_SPEED : int = 6
+var speed: float
+var SPRINT_SPEED: float = 10.0
+var  WALK_SPEED : float = 6.0
 const  JUMP_HEIGHT : int = 300
 
 var Max_Health: float = 100.0
@@ -40,7 +37,6 @@ var mouse_captured : bool = false
 
 # at the start get the mouse
 func _ready() -> void:
-	inv.inv_items.resize(5)
 	stamina_bar.max_value = Max_Stamina
 	health_bar.max_value = Max_Health
 	capture_mouse()
@@ -80,11 +76,11 @@ func _physics_process(delta: float) -> void:
 			else:
 				$UI/pickup.visible = false
 			if target != null and target.has_method("drop_off"): # take item out of inv
-				$UI/place.visible = true
+				$UI/delete.visible = true
 				if Input.is_action_just_pressed("interact"):
 					target.drop_off(inv)
 			else:
-				$UI/place.visible = false
+				$UI/delete.visible = false
 			if target != null and target.has_method("give_item"): # pick up item
 				$UI/pickup.visible = true
 				if Input.is_action_just_pressed("interact"):
@@ -111,8 +107,12 @@ func _physics_process(delta: float) -> void:
 				pass 
 		else:
 			$UI/pickup.visible = false
-			$UI/place.visible = false
-				
+			$UI/delete.visible = false
+		
+		if $UI/pickup.visible == true or $UI/delete.visible == true:
+			$UI/CenterContainer/crosshare.visible = false
+		else:
+			$UI/CenterContainer/crosshare.visible = true
 		# Add the gravity.
 		if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -140,7 +140,7 @@ func _physics_process(delta: float) -> void:
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3)
 		
 		# handle sprint
-		if Input.is_action_pressed("Sprint") and direction:
+		if Input.is_action_pressed("Sprint") and direction  and is_on_floor():
 			if can_sprint:
 				speed = SPRINT_SPEED
 				stamina -= delta
@@ -182,15 +182,15 @@ func capture_mouse() -> void:
 
 ## POWERUPS
 
-func pizza_health_up(item: InvItem) -> void:
-	health += item.health_plus
+func pizza_health_up(slot: InvSlot) -> void:
+	health += slot.item.health_plus
 
-func soda_speed_up(item:InvItem) -> void:
+func soda_speed_up(slot:InvSlot) -> void:
 	$UI/Speedeffect.visible = true
-	SPRINT_SPEED += item.speed_plus
-	WALK_SPEED += item.speed_plus
+	SPRINT_SPEED += slot.item.speed_plus
+	WALK_SPEED += slot.item.speed_plus
 	ui_anim.play("come_in")
-	$Timers/speed_timer.start(item.pow_time)
+	$Timers/speed_timer.start(slot.item.pow_time)
 
 
 func _on_ui_anim_animation_finished(anim_name: StringName) -> void:

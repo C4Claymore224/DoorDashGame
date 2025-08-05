@@ -1,0 +1,155 @@
+[gd_scene load_steps=8 format=3 uid="uid://dcfa6js7rg7so"]
+
+[ext_resource type="Script" uid="uid://3pu4lplu7pts" path="res://Resources/Inventory/UI Scenes/Code/inventory_ui.gd" id="1_hv16r"]
+[ext_resource type="PackedScene" uid="uid://dmsk0vcnbo34k" path="res://Resources/Inventory/UI Scenes/inv_slot.tscn" id="3_ko3ub"]
+[ext_resource type="Texture2D" uid="uid://bkn2xrbtqnhev" path="res://Assets/inv ui/Inv_Background.png" id="3_l7rlg"]
+
+[sub_resource type="Animation" id="Animation_ko3ub"]
+resource_name = "Come in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-230, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l7rlg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-230, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jpl4h"]
+resource_name = "Leave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-230, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ipd70"]
+_data = {
+&"Come in": SubResource("Animation_ko3ub"),
+&"Leave": SubResource("Animation_jpl4h"),
+&"RESET": SubResource("Animation_l7rlg")
+}
+
+[node name="Inventory UI" type="Control"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchor_right = 0.2
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_right = -231.67
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hv16r")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_l7rlg")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = -313.0
+offset_right = 102.0
+offset_bottom = 334.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="InvSlot1" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot2" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot3" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot4" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot5" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot6" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot7" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot8" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot9" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InvSlot10" parent="NinePatchRect/GridContainer" instance=ExtResource("3_ko3ub")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ipd70")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

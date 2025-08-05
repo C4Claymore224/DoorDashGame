@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://cu4d4sul34naq"]
+
+[ext_resource type="Script" uid="uid://b6jn2d3nrq5iu" path="res://Code/area/pizza_pickup.gd" id="1_ufsfq"]
+[ext_resource type="Resource" uid="uid://dx28weynwefm2" path="res://Resources/Inventory/Items/pizza.tres" id="2_6aolh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55srw"]
+albedo_color = Color(0.67814, 0.390177, 0.0318925, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mcci4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sayo7"]
+
+[node name="Pizza" type="RigidBody3D"]
+script = ExtResource("1_ufsfq")
+item = ExtResource("2_6aolh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_55srw")
+mesh = SubResource("BoxMesh_mcci4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_sayo7")

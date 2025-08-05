@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_hxwnn")
-display = ExtResource("1_s7uwq")
+hot_display = ExtResource("1_s7uwq")
 name = "Soda"
 gas_amount = 6.5
 pow_time = 5.0

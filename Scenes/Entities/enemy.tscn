@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://vec1s5nopvuo"]
 
-[ext_resource type="Script" uid="uid://c5kedpfyjgk75" path="res://code/Entities/enemy.gd" id="1_r2gkr"]
+[ext_resource type="Script" uid="uid://c5kedpfyjgk75" path="res://Code/Entities/enemy.gd" id="1_r2gkr"]
 [ext_resource type="Resource" uid="uid://bwejtvvckrx3w" path="res://Resources/Enemys/Zombo.tres" id="2_75t4r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2gkr"]
@@ -38,3 +38,4 @@ shape = SubResource("SphereShape3D_r2gkr")
 [node name="confused timer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="Detection zone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="Detection zone" to="." method="_on_detection_zone_body_exited"]
