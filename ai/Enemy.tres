@@ -1,0 +1,70 @@
+[gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://c8li7n8rpxc2l"]
+
+[ext_resource type="Script" uid="uid://d1b1c6bkg56lc" path="res://ai/tasks/pick_rand_pos.gd" id="1_jwob4"]
+[ext_resource type="Script" uid="uid://bq6uuxxihnatu" path="res://ai/tasks/attack.gd" id="1_pwb3d"]
+[ext_resource type="Script" uid="uid://caqjd57308315" path="res://ai/tasks/go_to_player.gd" id="1_vh26t"]
+[ext_resource type="Script" uid="uid://du5t7dxa48nw4" path="res://ai/tasks/move_to_pos.gd" id="2_vh26t"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_7jwqa"]
+var/State/name = &"State"
+var/State/type = 4
+var/State/value = ""
+var/State/hint = 0
+var/State/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_pwb3d"]
+type = 4
+saved_value = "attack"
+resource_name = "attack"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_qtjnr"]
+variable = &"state"
+value = SubResource("BBVariant_pwb3d")
+
+[sub_resource type="BTWait" id="BTWait_qtjnr"]
+
+[sub_resource type="BTAction" id="BTAction_pkevr"]
+script = ExtResource("1_pwb3d")
+
+[sub_resource type="BTSequence" id="BTSequence_pkevr"]
+custom_name = "Attack"
+children = [SubResource("BTCheckVar_qtjnr"), SubResource("BTWait_qtjnr"), SubResource("BTAction_pkevr")]
+
+[sub_resource type="BBVariant" id="BBVariant_vh26t"]
+type = 4
+saved_value = "persue"
+resource_name = "persue"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_pwb3d"]
+variable = &"state"
+value = SubResource("BBVariant_vh26t")
+
+[sub_resource type="BTAction" id="BTAction_qtjnr"]
+script = ExtResource("1_vh26t")
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_vh26t"]
+text = "Attack"
+
+[sub_resource type="BTSequence" id="BTSequence_d1cux"]
+custom_name = "Walk to player"
+children = [SubResource("BTCheckVar_pwb3d"), SubResource("BTAction_qtjnr"), SubResource("BTConsolePrint_vh26t")]
+
+[sub_resource type="BTAction" id="BTAction_4cmro"]
+script = ExtResource("1_jwob4")
+
+[sub_resource type="BTWait" id="BTWait_vh26t"]
+duration = 3.0
+
+[sub_resource type="BTAction" id="BTAction_pwb3d"]
+script = ExtResource("2_vh26t")
+
+[sub_resource type="BTSequence" id="BTSequence_y04wa"]
+custom_name = "wondering"
+children = [SubResource("BTAction_4cmro"), SubResource("BTWait_vh26t"), SubResource("BTAction_pwb3d")]
+
+[sub_resource type="BTSelector" id="BTSelector_ddfdw"]
+children = [SubResource("BTSequence_pkevr"), SubResource("BTSequence_d1cux"), SubResource("BTSequence_y04wa")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_7jwqa")
+root_task = SubResource("BTSelector_ddfdw")

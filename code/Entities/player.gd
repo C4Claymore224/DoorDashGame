@@ -4,6 +4,8 @@ class_name Player
 # TODO: Add visual to what your freaking holding 
 # TODO: Add a weapon
 
+const MAX_SPEED: float = 100
+
 # head bobble stuff
 const BOB_FREQ = 1.5
 const BOB_AMP = .19
@@ -11,6 +13,7 @@ var bob_time = 0.0
 
 @export var inv : Inventory
 
+@onready var state_machiene: LimboHSM = $StateMachiene
 @onready var ui_anim: AnimationPlayer = $UI/ui_anim
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
@@ -22,8 +25,8 @@ var bob_time = 0.0
 var sensitivity : float = 0.005
 var speed: float
 var SPRINT_SPEED: float = 10.0
-var  WALK_SPEED : float = 6.0
-const  JUMP_HEIGHT : int = 300
+var WALK_SPEED : float = 6.0
+const JUMP_HEIGHT : int = 300
 
 var Max_Health: float = 100.0
 var health: float = 50.0
@@ -33,17 +36,15 @@ var stamina: float = 3.0
 var can_sprint : bool = true
 var max_speed: bool = true
 
-var mouse_captured : bool = false
-
 # at the start get the mouse
 func _ready() -> void:
 	stamina_bar.max_value = Max_Stamina
 	health_bar.max_value = Max_Health
-	capture_mouse()
+	#capture_mouse()
 	
 # Player Mouse camera movement
 func _unhandled_input(event: InputEvent) -> void:
-	if mouse_captured and event is InputEventMouseMotion:
+	if GameManager.mouse_captured and event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-60), deg_to_rad(40))
@@ -55,6 +56,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		release_mouse()
 
 func _physics_process(delta: float) -> void:
+	#print(state_machiene.main_sm.get_active_state())
 	if GameManager.player_active:
 		camera_3d.make_current()
 		stamina_bar.value = stamina
@@ -65,7 +67,7 @@ func _physics_process(delta: float) -> void:
 			stamina = Max_Stamina
 			if !can_sprint:
 				can_sprint = true
-				
+	
 		# interact by looking at things
 		if lookcast.is_colliding():
 			var target = lookcast.get_collider()
@@ -88,7 +90,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				$UI/pickup.visible = false
 				
-			if target != null and target.has_method("get_player"): # get in car
+			if target != null and target.has_method("get_player"): # Get in car
 				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("interact"):
@@ -98,7 +100,7 @@ func _physics_process(delta: float) -> void:
 					collision_shape_3d.disabled = true
 					global_position = target.global_position
 					
-			if target != null and target.has_method("take_item"): # fueling car
+			if target != null and target.has_method("take_item"): # Fueling car
 				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("playerclick"):
@@ -109,7 +111,7 @@ func _physics_process(delta: float) -> void:
 			$UI/pickup.visible = false
 			$UI/delete.visible = false
 		
-		if $UI/pickup.visible == true or $UI/delete.visible == true:
+		if $UI/pickup.visible == true or $UI/delete.visible == true: # switches out crosshairs
 			$UI/CenterContainer/crosshare.visible = false
 		else:
 			$UI/CenterContainer/crosshare.visible = true
@@ -130,9 +132,7 @@ func _physics_process(delta: float) -> void:
 			if direction:
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
-				update_audio("walking")
 			else:
-				 # HACK: if im not walking play audio????????? i guess????????? idk why this kinds works 
 				velocity.x = 0
 				velocity.z = 0
 		else:
@@ -173,12 +173,12 @@ func _head_bob(time) -> Vector3:
 # let the mouse go
 func release_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	mouse_captured = false
+	GameManager.mouse_captured = false
 	
 # gimme the mouse
 func capture_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	mouse_captured = true
+	GameManager.mouse_captured = true
 
 ## POWERUPS
 
@@ -213,3 +213,13 @@ func update_audio(audio_name: String) -> void:
 
 func _on_player_audio_finished() -> void:
 	print("done")
+
+func take_damage(dmg: float):
+	health -= dmg
+	if health <= 0:
+		health = 0
+		death()
+
+func death():
+	print("ded")
+	

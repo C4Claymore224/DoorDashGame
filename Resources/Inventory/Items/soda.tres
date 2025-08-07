@@ -11,4 +11,5 @@ gas_amount = 6.5
 pow_time = 5.0
 health_plus = 300.0
 speed_plus = 5.0
+max_itemPrStack = 3
 metadata/_custom_type_script = "uid://desfnl2axl7ab"

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c46a8q7n27ldm"]
+[gd_scene load_steps=5 format=3 uid="uid://c46a8q7n27ldm"]
 
 [ext_resource type="Script" uid="uid://cdj0y1fuun5wn" path="res://Resources/Inventory/UI Scenes/Code/hot_bar_slots.gd" id="1_uja5l"]
 [ext_resource type="Texture2D" uid="uid://c2o8ipgrbqyf1" path="res://Assets/inv ui/Hotbat_slot_bg.png" id="2_e1nym"]
 [ext_resource type="Texture2D" uid="uid://ce80f01bcu8au" path="res://Assets/inv ui/no_item.png" id="3_e1nym"]
+[ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="4_bip6l"]
 
 [node name="Hot_bar_slots" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
@@ -31,3 +32,16 @@ grow_vertical = 2
 scale = Vector2(2.34375, 2.34375)
 texture = ExtResource("3_e1nym")
 centered = false
+
+[node name="amount" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 30.0
+offset_top = 32.0
+offset_right = 70.0
+offset_bottom = 74.0
+theme = ExtResource("4_bip6l")
+theme_override_font_sizes/font_size = 20
+text = "99"
+horizontal_alignment = 2
+vertical_alignment = 2

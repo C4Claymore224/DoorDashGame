@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Weapons" load_steps=2 format=3 uid="uid://p0gxbdw8rn7"]
+
+[ext_resource type="Script" uid="uid://ccttd17ppy8n" path="res://Weapons/Weapons.gd" id="1_psah7"]
+
+[resource]
+script = ExtResource("1_psah7")
+name = &"Knife"
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+shadow = false
+metadata/_custom_type_script = "uid://ccttd17ppy8n"

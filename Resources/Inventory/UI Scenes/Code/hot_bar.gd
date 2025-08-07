@@ -66,8 +66,9 @@ func player_use_picked_item():
 		if slot.item:
 			match slot.item.name:
 				"Pizza":
-					player.pizza_health_up(slot)
-					inv.remove_at_space(GameManager.slot_selected)
+					if !player.health == player.Max_Health:
+						player.pizza_health_up(slot)
+						inv.remove_at_space(GameManager.slot_selected)
 				"Soda":
 					player.soda_speed_up(slot)
 					inv.remove_at_space(GameManager.slot_selected)

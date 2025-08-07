@@ -1,26 +1,22 @@
 extends Button
 
-@onready var item_display: TextureRect = $CenterContainer/ItemDisplay
-@onready var label: Label = $Label
 
-var no_item : Texture = preload("uid://jep2cneoospv")
+@onready var bg: TextureRect = $BG
+@onready var center_container: CenterContainer = $CenterContainer
+
+var item_stack_giu: ItemStackGui
+
 var def_text : String = "no item"
 
 var item_name: String
 
-func update(slot: InvSlot):
-	if slot.item:
-		item_display.texture = slot.item.inv_display
-		item_name = slot.item.name
-		label.text = str(slot.count)
-		label.visible = true
-	else:
-		item_display.texture = no_item
-		label.visible = false
+func insert(isg: ItemStackGui):
+	item_stack_giu = isg
+	center_container.add_child(item_stack_giu)
 
-func _on_pressed() -> void:
-	match item_name:
-		"Pizza":
-			print("Pizza")
-		"Soda":
-			print("Soda")
+func take_item():
+	var item = item_stack_giu
+	
+	center_container.remove_child(item_stack_giu)
+	item_stack_giu = null
+	return item

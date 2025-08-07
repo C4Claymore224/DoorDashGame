@@ -1,8 +1,6 @@
 extends VehicleBody3D
 class_name Automobile
 
-# FIXME: pizza not refilling gas
-
 const STOP = 0
 const REGULAR_SPEED = 300
 
@@ -90,13 +88,14 @@ func take_item(inv: Inventory):
 			break
 
 func add_gas(slot: InvSlot) -> void:
-	match slot.item.name:
-		"Pizza":
-			gas_in_tank += slot.item.gas_amount
-			print(gas_in_tank)
-		"Soda":
-			gas_in_tank += slot.item.gas_amount
-			print(gas_in_tank)
+	if slot.item:
+		match slot.item.name:
+			"Pizza":
+				gas_in_tank += slot.item.gas_amount
+				print(gas_in_tank)
+			"Soda":
+				gas_in_tank += slot.item.gas_amount
+				print(gas_in_tank)
 
 func use_powerup(slot: InvSlot):
 	match slot.item.name:
