@@ -44,7 +44,7 @@ environment = SubResource("Environment_tuo8j")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.414693, -0.650142, 0.636667, 0, 0.699663, 0.714473, -0.909961, 0.296287, -0.290146, 0, 0, 0)
-light_color = Color(0.650128, 0.650128, 0.650128, 1)
+light_color = Color(0.743771, 0.633645, 0.445709, 1)
 shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]

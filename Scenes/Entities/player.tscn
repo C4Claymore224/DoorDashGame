@@ -1,18 +1,21 @@
-[gd_scene load_steps=31 format=3 uid="uid://dl3uh7rq6crmk"]
+[gd_scene load_steps=34 format=3 uid="uid://dl3uh7rq6crmk"]
 
 [ext_resource type="Script" uid="uid://oudm3hveajgo" path="res://Code/Entities/player.gd" id="1_v0iea"]
 [ext_resource type="Resource" uid="uid://nsrcjlvlnkhe" path="res://Resources/Inventory/Inventories/PlayerInv.tres" id="2_6t5aa"]
 [ext_resource type="Texture2D" uid="uid://dd45jotwth07j" path="res://Assets/inv ui/crosshare.png" id="2_cvnsp"]
-[ext_resource type="PackedScene" uid="uid://dg7krko17iwku" path="res://Assets/wepons/Knife.blend" id="3_at1v1"]
+[ext_resource type="PackedScene" uid="uid://d2f30ilyn667y" path="res://Weapons/weapon.tscn" id="3_pm2yg"]
+[ext_resource type="Resource" uid="uid://p0gxbdw8rn7" path="res://Weapons/Knife.tres" id="4_43gew"]
 [ext_resource type="PackedScene" uid="uid://niyvg1wuc8r" path="res://Resources/Inventory/UI Scenes/hot_bar.tscn" id="4_vgqql"]
 [ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="5_fkybt"]
 [ext_resource type="Texture2D" uid="uid://goud0fjt10hu" path="res://Assets/textures/Swirl_01-128x128.png" id="5_y18yp"]
 [ext_resource type="Texture2D" uid="uid://gmxlfpwktvii" path="res://Assets/inv ui/hand.png" id="6_y18yp"]
 [ext_resource type="Shader" uid="uid://bbohqiak5a0ku" path="res://Code/Shaders & Effect layers/effect.gdshader" id="6_yqx0t"]
 [ext_resource type="Texture2D" uid="uid://ujomm2j42pib" path="res://Assets/inv ui/Delet.png" id="7_85s6f"]
-[ext_resource type="Script" uid="uid://dtrfpbwnmh5yo" path="res://StateMachiene/StateMachiene.gd" id="10_14y0q"]
 [ext_resource type="Script" uid="uid://cx7e27wrhib3b" path="res://StateMachiene/States/idle_state.gd" id="11_f5ba2"]
+[ext_resource type="Script" uid="uid://60vdnx0vo863" path="res://StateMachiene/States/sprint_state.gd" id="12_f5ba2"]
+[ext_resource type="Script" uid="uid://dxciqb3xsfd7c" path="res://StateMachiene/States/jump_state.gd" id="13_at1v1"]
 [ext_resource type="Script" uid="uid://b6pq1faoe4xdc" path="res://StateMachiene/States/walk_state.gd" id="13_kvkok"]
+[ext_resource type="Script" uid="uid://dwra77yyvkv8m" path="res://StateMachiene/States/falling_state.gd" id="14_at1v1"]
 
 [sub_resource type="Animation" id="Animation_at1v1"]
 resource_name = "Attack Nife"
@@ -161,8 +164,9 @@ _data = {
 radius = 0.666784
 height = 2.24047
 
-[node name="Player" type="CharacterBody3D" groups=["Player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("state_machiene") groups=["Player"]]
 script = ExtResource("1_v0iea")
+state_machiene = NodePath("StateMachiene")
 inv = ExtResource("2_6t5aa")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -188,8 +192,9 @@ collide_with_areas = true
 
 [node name="Hand" type="Node3D" parent="Head/Camera3D"]
 
-[node name="Knife" parent="Head/Camera3D/Hand" instance=ExtResource("3_at1v1")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.23886, -0.4682, -0.686009)
+[node name="Weapon" parent="Head/Camera3D/Hand" instance=ExtResource("3_pm2yg")]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0.316354, -0.0951021, -0.409236)
+weapon_type = ExtResource("4_43gew")
 
 [node name="Timers" type="Node3D" parent="."]
 
@@ -260,9 +265,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_85s6f")
 }
 
-[node name="StateMachiene" type="LimboHSM" parent="." node_paths=PackedStringArray("charicter")]
-script = ExtResource("10_14y0q")
-charicter = NodePath("..")
+[node name="HurtBox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("CapsuleShape3D_at1v1")
+
+[node name="StateMachiene" type="LimboHSM" parent="."]
 
 [node name="idle state" type="LimboState" parent="StateMachiene"]
 script = ExtResource("11_f5ba2")
@@ -271,11 +279,13 @@ script = ExtResource("11_f5ba2")
 script = ExtResource("13_kvkok")
 
 [node name="sprint state" type="LimboState" parent="StateMachiene"]
+script = ExtResource("12_f5ba2")
 
-[node name="HurtBox" type="Area3D" parent="."]
+[node name="jump state" type="LimboState" parent="StateMachiene"]
+script = ExtResource("13_at1v1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
-shape = SubResource("CapsuleShape3D_at1v1")
+[node name="falling state" type="LimboState" parent="StateMachiene"]
+script = ExtResource("14_at1v1")
 
 [connection signal="timeout" from="Timers/speed_timer" to="." method="_on_speed_timer_timeout"]
 [connection signal="animation_finished" from="UI/ui_anim" to="." method="_on_ui_anim_animation_finished"]

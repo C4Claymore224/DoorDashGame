@@ -1,6 +1,6 @@
 extends BTAction
 
-func _tick(delta: float) -> Status:
+func _tick(_delta: float) -> Status:
 	
 	var pos: Vector3 = agent.global_transform.origin
 	pos += Vector3(

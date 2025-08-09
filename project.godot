@@ -39,8 +39,7 @@ folder_colors={
 "res://Code/": "red",
 "res://Globals/": "green",
 "res://Resources/": "purple",
-"res://Scenes/": "blue",
-"res://addons/": "pink"
+"res://Scenes/": "blue"
 }
 
 [input]

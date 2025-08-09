@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgk0w5qexmt8m"]
+[gd_scene load_steps=14 format=3 uid="uid://dgk0w5qexmt8m"]
 
 [ext_resource type="Script" uid="uid://dbqt4dm40uo5p" path="res://Code/vehicles/car.gd" id="1_p7pfu"]
 [ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="2_ovntf"]
@@ -9,7 +9,7 @@ size = Vector3(2.4, 0.9, 3.6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ng7n"]
 shading_mode = 0
-albedo_color = Color(0.224378, 0.0305045, 0.00684268, 1)
+albedo_color = Color(0.190194, 0.0725093, 0.0258182, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_p7pfu"]
 material = SubResource("StandardMaterial3D_2ng7n")
@@ -64,7 +64,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Car" type="VehicleBody3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vin2h"]
+size = Vector3(2.40332, 0.929581, 0.522797)
+
+[node name="Car" type="VehicleBody3D" groups=["Vehicle"]]
 script = ExtResource("1_p7pfu")
 storage = ExtResource("2_vin2h")
 
@@ -170,4 +173,12 @@ one_shot = true
 [node name="speed cooldown" type="Timer" parent="."]
 one_shot = true
 
+[node name="Runover Area" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Runover Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.205055, -1.53189)
+shape = SubResource("BoxShape3D_vin2h")
+debug_color = Color(0.998151, 0, 0.149284, 0.42)
+
 [connection signal="timeout" from="speed pow timer" to="." method="_on_speed_pow_timer_timeout"]
+[connection signal="body_entered" from="Runover Area" to="." method="_on_runover_area_body_entered"]

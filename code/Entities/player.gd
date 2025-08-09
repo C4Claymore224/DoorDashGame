@@ -11,9 +11,17 @@ const BOB_FREQ = 1.5
 const BOB_AMP = .19
 var bob_time = 0.0
 
+@export var state_machiene: LimboHSM
 @export var inv : Inventory
 
-@onready var state_machiene: LimboHSM = $StateMachiene
+## States
+@onready var idle_state: LimboState = $"StateMachiene/idle state"
+@onready var walk_state: LimboState = $"StateMachiene/walk state"
+@onready var sprint_state: LimboState = $"StateMachiene/sprint state"
+@onready var jump_state: LimboState = $"StateMachiene/jump state"
+@onready var falling_state: LimboState = $"StateMachiene/falling state"
+
+
 @onready var ui_anim: AnimationPlayer = $UI/ui_anim
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
@@ -27,27 +35,42 @@ var speed: float
 var SPRINT_SPEED: float = 10.0
 var WALK_SPEED : float = 6.0
 const JUMP_HEIGHT : int = 300
-
 var Max_Health: float = 100.0
 var health: float = 50.0
-
 var Max_Stamina: float = 3.0
 var stamina: float = 3.0
 var can_sprint : bool = true
 var max_speed: bool = true
 
+## State Stuff
+var play_direction: Vector3
+var is_sprinting: bool
+
 # at the start get the mouse
 func _ready() -> void:
+	init_state_machiene()
 	stamina_bar.max_value = Max_Stamina
 	health_bar.max_value = Max_Health
 	#capture_mouse()
+
+func init_state_machiene():
+	state_machiene.add_transition(state_machiene.ANYSTATE, idle_state,"to_idle")
+	state_machiene.add_transition(idle_state, walk_state, "to_walk")
+	state_machiene.add_transition(sprint_state, walk_state, "to_walk")
+	state_machiene.add_transition(walk_state, sprint_state, "to_sprint")
 	
+	state_machiene.add_transition(state_machiene.ANYSTATE,jump_state,"to_jump")
+	
+	state_machiene.initial_state = idle_state
+	state_machiene.initialize(self)
+	state_machiene.set_active(true)
+
 # Player Mouse camera movement
 func _unhandled_input(event: InputEvent) -> void:
 	if GameManager.mouse_captured and event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
-		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-60), deg_to_rad(40))
+		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-80), deg_to_rad(50))
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		capture_mouse()
@@ -100,11 +123,11 @@ func _physics_process(delta: float) -> void:
 					collision_shape_3d.disabled = true
 					global_position = target.global_position
 					
-			if target != null and target.has_method("take_item"): # Fueling car
+			if target != null and target.has_method("fueling_self"): # Fueling car
 				# TODO: Optional ui text
 				pass
 				if Input.is_action_just_pressed("playerclick"):
-					target.take_item(inv)
+					target.fueling_self(inv)
 			else:
 				pass 
 		else:
@@ -126,7 +149,7 @@ func _physics_process(delta: float) -> void:
 		# handle direction iput
 		var input_dir := Input.get_vector("left", "right", "frount", "back")
 		var direction := (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		
+		play_direction = direction
 		# can control body in air with this 
 		if is_on_floor():
 			if direction:
@@ -140,7 +163,8 @@ func _physics_process(delta: float) -> void:
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 3)
 		
 		# handle sprint
-		if Input.is_action_pressed("Sprint") and direction  and is_on_floor():
+		if Input.is_action_pressed("Sprint") and direction and is_on_floor():
+			is_sprinting = true
 			if can_sprint:
 				speed = SPRINT_SPEED
 				stamina -= delta
@@ -150,6 +174,7 @@ func _physics_process(delta: float) -> void:
 				speed = WALK_SPEED
 				stamina += delta # slow regen rate
 		else:
+			is_sprinting = false
 			speed = WALK_SPEED
 			stamina += delta
 		#HeadBob <-- use hashtag today!

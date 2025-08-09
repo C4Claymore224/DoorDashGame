@@ -17,7 +17,7 @@ radius = 10.7956
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ygq1y"]
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" groups=["Enem"]]
 script = ExtResource("1_r2gkr")
 type = ExtResource("2_75t4r")
 
@@ -38,18 +38,9 @@ transform = Transform3D(1, 0, 0, 0, -6.55671e-07, -1, 0, 15, -4.37114e-08, 0, 0.
 transform = Transform3D(0.844807, 0, 0, 0, 0.844807, 0, 0, 0, 0.844807, 0, 0, 0)
 shape = SubResource("SphereShape3D_r2gkr")
 
-[node name="confused timer" type="Timer" parent="."]
-
-[node name="Attack" type="Timer" parent="."]
-one_shot = true
-
-[node name="Attack_cooldown" type="Timer" parent="."]
-one_shot = true
-
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("3_ge2ll")
 blackboard_plan = SubResource("BlackboardPlan_ygq1y")
 
 [connection signal="body_entered" from="Detection zone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="Detection zone" to="." method="_on_detection_zone_body_exited"]
-[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]

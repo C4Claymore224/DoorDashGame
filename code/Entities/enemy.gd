@@ -1,43 +1,33 @@
 extends CharacterBody3D
 class_name Enemy
-
 # FIXME make attack go once
-enum State {
-	IDLE,
-	CHASING,
-	ATTACKING
-}
-
-var current_state: State = State.IDLE
 
 @export var type: Enem_Type
 
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
-@onready var confused_timer: Timer = $"confused timer"
-@onready var attacking: Timer = $Attack
-@onready var attack_cooldown: Timer = $Attack_cooldown
 @onready var sight: RayCast3D = $Sight
 @onready var bt_player: BTPlayer = $BTPlayer
 
 var target : Player
+var in_range_to_attack: bool = false
 var seeing_player: bool = true
 var can_attack: bool = false
+var play_dis
 
 func _ready() -> void:
-	pass
+	bt_player.blackboard.set_var("State", "wonder")
 
 func _physics_process(delta: float) -> void:
 	# We sense the player
 	if target:
-		bt_player.blackboard.set_var("state", "persue")
-		bt_player.restart()
 		sight.enabled = true
 		look_at(target.global_position) # look at him
 		var distance = global_position.distance_to(target.global_position)
-		if distance <= type.attack_range: 
-			bt_player.blackboard.set_var("state", "attack")
-			bt_player.restart()
-			
+		play_dis = distance
+		if distance <= type.attack_range:
+			in_range_to_attack = true
+		else:
+			in_range_to_attack = false
 		if distance >= type.stop_persuit:
 			stop()
 	else:
@@ -70,6 +60,8 @@ func _physics_process(delta: float) -> void:
 func _on_detection_zone_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Player"):
 		target = body
+		bt_player.blackboard.set_var("State", "persue")
+		bt_player.restart()
 
 # follow target
 func follow_target() -> void:
@@ -79,27 +71,18 @@ func follow_target() -> void:
 		var local_destination = destination - global_transform.origin
 		var nav_direction = local_destination.normalized()
 		velocity = nav_direction * type.speed
-	else:
-		pass
 
 func attack_player():
-	print("Attacking Playerr")
-	#if target:
-		#target.take_damage(type.damage)
-		#attacking.start()
-		#can_attack = false
+	if target:
+		target.take_damage(type.damage)
 
-# the stoping of the chase
+# stop persuing
 func stop():
-	target = null
 	position = Vector3(-9,2,16)
+	bt_player.blackboard.set_var("State", "wonder")
+	bt_player.restart()
 
-
-func _on_attack_timeout() -> void:
-	attack_player()
-
-
-func idle_wonder(target_pos: Vector3, delta: float):
+func idle_wonder(target_pos: Vector3): # limboai function
 	var direction := Vector3(
 		target_pos.x - global_transform.origin.x,
 		0,
@@ -108,3 +91,12 @@ func idle_wonder(target_pos: Vector3, delta: float):
 	
 	velocity.x = direction.x * type.speed
 	velocity.z = direction.z * type.speed
+
+func take_damage(dmg: int) -> void:
+	type.health -= dmg
+	print(type.health)
+	if type.health <= 0:
+		death()
+
+func death():
+	queue_free()

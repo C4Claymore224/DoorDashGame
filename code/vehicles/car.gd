@@ -18,13 +18,13 @@ const REGULAR_SPEED = 300
 @onready var speed_pow_timer: Timer = $"speed pow timer"
 @onready var speed_cooldown: Timer = $"speed cooldown"
 
+var ram_damae : int = 3
+
 var max_health : float = 100
 var health : float = 80
-
 var max_tank_gas: float = 30
 var gas_in_tank: float = 15
 var can_drive: bool = true
-
 var player
 
 func _ready() -> void:
@@ -36,13 +36,15 @@ func _physics_process(delta: float) -> void:
 		gas_in_tank = max_tank_gas
 	if gas_in_tank <= 0:
 		gas_in_tank = 0
-		can_drive = false
+		can_drive = false # car cant fucntion untill refueled
 	else:
 		can_drive = true
+		
 	if health >= max_health:
 		health = max_health
 	if health <= 0: 
 		print("dead")
+		
 	if GameManager.car_active:
 		GameManager.player_in_vehicle(self)
 		camera_3d.make_current()
@@ -59,11 +61,12 @@ func _physics_process(delta: float) -> void:
 			player.global_position = player_seat_pos.global_position # works fix later
 		
 		if Input.is_action_just_pressed("leave car"):
-				exit_car() # player leaves car
+				exit_car()
+		
 		if can_drive:
 			Engine_Power = REGULAR_SPEED
 			if engine_force:
-				gas_in_tank -= delta
+				gas_in_tank -= delta # / 2 adding this makes gass go slower keep in mind
 		else:
 			Engine_Power = STOP
 	else:
@@ -77,15 +80,18 @@ func exit_car() -> void:
 	player.global_position = leave_spot_pos.global_position
 	can_drive = false
 
-func get_player(vessl: Player):
-	player = vessl
-	
-func take_item(inv: Inventory):
-	for i in inv.slots.size():
-		if inv.slots[GameManager.slot_selected]:
-			add_gas(inv.slots[GameManager.slot_selected])
-			inv.remove_at_space(GameManager.slot_selected)
-			break
+func get_player(ply: Player):
+	player = ply
+
+func fueling_self(inv: Inventory):
+	if !gas_in_tank >= max_tank_gas:
+		for i in inv.slots.size():
+			if inv.slots[GameManager.slot_selected]:
+				add_gas(inv.slots[GameManager.slot_selected])
+				inv.remove_at_space(GameManager.slot_selected)
+				break
+	else:
+		print("TANK FULL")
 
 func add_gas(slot: InvSlot) -> void:
 	if slot.item:
@@ -107,4 +113,7 @@ func use_powerup(slot: InvSlot):
 
 func _on_speed_pow_timer_timeout() -> void:
 	Engine_Power = REGULAR_SPEED
-	
+
+func _on_runover_area_body_entered(body: Node3D) -> void:
+	if body.is_in_group("Enem"):
+		body.take_damage(ram_damae)

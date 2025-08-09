@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="Weapons" load_steps=2 format=3 uid="uid://p0gxbdw8rn7"]
+[gd_resource type="Resource" script_class="Weapons" load_steps=3 format=3 uid="uid://p0gxbdw8rn7"]
 
+[ext_resource type="ArrayMesh" uid="uid://bk26s4joy3qew" path="res://Assets/wepons/knife.res" id="1_nohfv"]
 [ext_resource type="Script" uid="uid://ccttd17ppy8n" path="res://Weapons/Weapons.gd" id="1_psah7"]
 
 [resource]
 script = ExtResource("1_psah7")
 name = &"Knife"
-position = Vector3(0, 0, 0)
-rotation = Vector3(0, 0, 0)
+position = Vector3(0.316354, -0.0951021, -0.409236)
+rotation = Vector3(0, 4.71239, 0)
+mesh = ExtResource("1_nohfv")
 shadow = false
+damage = 3.0
 metadata/_custom_type_script = "uid://ccttd17ppy8n"

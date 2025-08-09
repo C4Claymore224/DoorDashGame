@@ -8,3 +8,4 @@ class_name Weapons
 @export_category("Visual Settings")
 @export var mesh : Mesh
 @export var shadow : bool
+@export var damage : float
