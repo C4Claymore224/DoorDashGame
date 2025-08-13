@@ -1,9 +1,10 @@
 extends CharacterBody3D
 class_name Enemy
-# FIXME make attack go once
 
 @export var type: Enem_Type
 
+@onready var animated_sprite_3d: AnimatedSprite3D = $AnimatedSprite3D
+@onready var animation_player: AnimationPlayer = $Skeleton_Minion/AnimationPlayer
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var sight: RayCast3D = $Sight
 @onready var bt_player: BTPlayer = $BTPlayer
@@ -37,15 +38,13 @@ func _physics_process(delta: float) -> void:
 		var sight_body = sight.get_collider()
 		if !sight_body.has_method("_head_bob"): # If im not looking at the player
 			seeing_player = false
-			stop()
 		else:
 			seeing_player = true
 	
 	if not is_on_floor():
 		velocity.y -= 9.2 * delta
-	else:
-		velocity.y -= 2
-	
+
+
 	## keep for later maybe :V
 	#velocity.y = JUMP_VELOCITY
 	#if direction:
@@ -78,7 +77,9 @@ func attack_player():
 
 # stop persuing
 func stop():
-	position = Vector3(-9,2,16)
+	#position = Vector3(-9,2,16)
+	target = null
+	velocity = Vector3.ZERO
 	bt_player.blackboard.set_var("State", "wonder")
 	bt_player.restart()
 
@@ -99,4 +100,14 @@ func take_damage(dmg: int) -> void:
 		death()
 
 func death():
-	queue_free()
+	type.speed = 0
+	$Skeleton_Minion.visible = false
+	animated_sprite_3d.visible = true
+	animated_sprite_3d.play("death")
+
+
+func _on_animated_sprite_3d_animation_finished() -> void:
+	match animated_sprite_3d.animation:
+		"death":
+			queue_free()
+	

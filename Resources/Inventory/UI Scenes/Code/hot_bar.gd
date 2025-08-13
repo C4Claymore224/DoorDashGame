@@ -2,17 +2,16 @@ extends Panel
 class_name Hotbar
 
 @export var inv : Inventory
-@export var player: Player
+@export var player: Player              
 @onready var slots : Array = $contaner.get_children()
 @onready var selector: Sprite2D = $Selector
 
 var vehicle: Automobile 
 
-
 func _ready() -> void:
 	inv.updated.connect(update)
 	update()
-	selector.position = Vector2(-1.5,-1)
+	selector.position = Vector2(-0.5, 0.0)
 	pick_slot(0)
 
 func update():
@@ -50,15 +49,15 @@ func pick_slot(index: int):
 		GameManager.slot_selected = index
 	match index:
 		0:
-			selector.position = Vector2(-1.5,-1.0)
+			selector.position = Vector2(-0.5, 0.0)
 		1:
-			selector.position = Vector2(77.5,-1.0)
+			selector.position = Vector2(58.5, 0.0)
 		2:
-			selector.position = Vector2(156.5,-1.0)
+			selector.position = Vector2(117.5, 0.0)
 		3:
-			selector.position = Vector2(235.5,-1.0)
+			selector.position = Vector2(176.5, 0.0)
 		4:
-			selector.position = Vector2(314.5,-1.0)
+			selector.position = Vector2(235.5,0.0)
 
 func player_use_picked_item():
 	if GameManager.slot_selected != -1:
@@ -79,7 +78,7 @@ func player_use_picked_item():
 func vehicle_use_picked_item():
 	if GameManager.slot_selected != -1:
 		var slot = inv.slots[GameManager.slot_selected]
-		if slot:
+		if slot.item:
 			match slot.item.name:
 				"Pizza":
 					GameManager.car_selected.use_powerup(slot)

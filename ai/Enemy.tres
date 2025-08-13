@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=23 format=3 uid="uid://c8li7n8rpxc2l"]
+[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://c8li7n8rpxc2l"]
 
 [ext_resource type="Script" uid="uid://d1b1c6bkg56lc" path="res://ai/tasks/pick_rand_pos.gd" id="1_jwob4"]
 [ext_resource type="Script" uid="uid://caqjd57308315" path="res://ai/tasks/go_to_player.gd" id="1_vh26t"]
@@ -24,16 +24,40 @@ value = SubResource("BBVariant_pwb3d")
 [sub_resource type="BTAction" id="BTAction_txnp4"]
 script = ExtResource("1_jwob4")
 
+[sub_resource type="BBNode" id="BBNode_7q5h4"]
+saved_value = NodePath("Skeleton_Minion/AnimationPlayer")
+resource_name = "Skeleton_Minion/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_p2iox"]
+animation_player = SubResource("BBNode_7q5h4")
+animation_name = &"Idle_Combat"
+
 [sub_resource type="BTRandomWait" id="BTRandomWait_vh26t"]
 min_duration = 2.0
 max_duration = 4.0
+
+[sub_resource type="BBNode" id="BBNode_qtjnr"]
+saved_value = NodePath("Skeleton_Minion/AnimationPlayer")
+resource_name = "Skeleton_Minion/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_pkevr"]
+animation_player = SubResource("BBNode_qtjnr")
+animation_name = &"Walking_D_Skeletons"
 
 [sub_resource type="BTAction" id="BTAction_ij3fi"]
 script = ExtResource("2_vh26t")
 
 [sub_resource type="BTSequence" id="BTSequence_sjj35"]
 custom_name = "rand wonder"
-children = [SubResource("BTCheckVar_qtjnr"), SubResource("BTAction_txnp4"), SubResource("BTRandomWait_vh26t"), SubResource("BTAction_ij3fi")]
+children = [SubResource("BTCheckVar_qtjnr"), SubResource("BTAction_txnp4"), SubResource("BTPlayAnimation_p2iox"), SubResource("BTRandomWait_vh26t"), SubResource("BTPlayAnimation_pkevr"), SubResource("BTAction_ij3fi")]
+
+[sub_resource type="BBNode" id="BBNode_pwb3d"]
+saved_value = NodePath("Skeleton_Minion/AnimationPlayer")
+resource_name = "Skeleton_Minion/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_qtjnr"]
+animation_player = SubResource("BBNode_pwb3d")
+animation_name = &"Running_C"
 
 [sub_resource type="BBVariant" id="BBVariant_jwob4"]
 type = 4
@@ -49,7 +73,7 @@ script = ExtResource("1_vh26t")
 
 [sub_resource type="BTSequence" id="BTSequence_qtjnr"]
 custom_name = "persuit"
-children = [SubResource("BTCheckVar_vh26t"), SubResource("BTAction_pwb3d")]
+children = [SubResource("BTPlayAnimation_qtjnr"), SubResource("BTCheckVar_vh26t"), SubResource("BTAction_pwb3d")]
 
 [sub_resource type="BBVariant" id="BBVariant_qtjnr"]
 type = 4
@@ -60,17 +84,26 @@ resource_name = "attacking"
 variable = &"State"
 value = SubResource("BBVariant_qtjnr")
 
+[sub_resource type="BBNode" id="BBNode_pkevr"]
+saved_value = NodePath("Skeleton_Minion/AnimationPlayer")
+resource_name = "Skeleton_Minion/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_7q5h4"]
+animation_player = SubResource("BBNode_pkevr")
+animation_name = &"1H_Melee_Attack_Slice_Horizontal"
+
 [sub_resource type="BTWait" id="BTWait_qtjnr"]
-duration = 0.1
+duration = 0.25
 
 [sub_resource type="BTAction" id="BTAction_qtjnr"]
 script = ExtResource("2_pwb3d")
 
 [sub_resource type="BTWait" id="BTWait_pwb3d"]
+duration = 0.817
 
 [sub_resource type="BTSequence" id="BTSequence_pkevr"]
 custom_name = "attack"
-children = [SubResource("BTCheckVar_pkevr"), SubResource("BTWait_qtjnr"), SubResource("BTAction_qtjnr"), SubResource("BTWait_pwb3d")]
+children = [SubResource("BTCheckVar_pkevr"), SubResource("BTPlayAnimation_7q5h4"), SubResource("BTWait_qtjnr"), SubResource("BTAction_qtjnr"), SubResource("BTWait_pwb3d")]
 
 [sub_resource type="BTSelector" id="BTSelector_pwb3d"]
 children = [SubResource("BTSequence_sjj35"), SubResource("BTSequence_qtjnr"), SubResource("BTSequence_pkevr")]

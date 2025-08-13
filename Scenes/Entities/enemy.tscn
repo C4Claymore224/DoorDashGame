@@ -1,33 +1,96 @@
-[gd_scene load_steps=9 format=3 uid="uid://vec1s5nopvuo"]
+[gd_scene load_steps=16 format=3 uid="uid://vec1s5nopvuo"]
 
 [ext_resource type="Script" uid="uid://c5kedpfyjgk75" path="res://Code/Entities/enemy.gd" id="1_r2gkr"]
 [ext_resource type="Resource" uid="uid://bwejtvvckrx3w" path="res://Resources/Enemys/Zombo.tres" id="2_75t4r"]
 [ext_resource type="BehaviorTree" uid="uid://c8li7n8rpxc2l" path="res://ai/Enemy.tres" id="3_ge2ll"]
+[ext_resource type="Texture2D" uid="uid://e7syk0cf78ly" path="res://Assets/Enemies/enemy_death.png" id="4_tx8ge"]
+[ext_resource type="PackedScene" uid="uid://dx4wmvkbac2yn" path="res://Assets/Rig Scenes/Skeleton_Minion.glb" id="4_ygq1y"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2gkr"]
-albedo_color = Color(1, 0.800667, 0.54, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ar56"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_r2gkr"]
-material = SubResource("StandardMaterial3D_r2gkr")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hroqg"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny53q"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaxvc"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0ta7"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbtin"]
+atlas = ExtResource("4_tx8ge")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fu0go"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ar56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hroqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ny53q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iaxvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0ta7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbtin")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o6kgl"]
+radius = 0.460487
+height = 2.18649
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_r2gkr"]
 radius = 10.7956
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ygq1y"]
 
-[node name="Enemy" type="CharacterBody3D" groups=["Enem"]]
+[node name="Enemy" type="CharacterBody3D" groups=["Enemy"]]
 script = ExtResource("1_r2gkr")
 type = ExtResource("2_75t4r")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_r2gkr")
+[node name="Skeleton_Minion" parent="." instance=ExtResource("4_ygq1y")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.00326055, -0.829226, 0.0354022)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(6.58896, 0, 0, 0, 8.39563, 0, 0, 0, -1.61951, 0, 0, 0)
+visible = false
+modulate = Color(0.633755, 0.588658, 0.638118, 1)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_fu0go")
+animation = &"death"
+frame = 5
+frame_progress = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20229, 0)
 shape = SubResource("CapsuleShape3D_o6kgl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+simplify_path = true
+debug_enabled = true
 
 [node name="Sight" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -6.55671e-07, -1, 0, 15, -4.37114e-08, 0, 0.703437, 0)
@@ -42,5 +105,8 @@ shape = SubResource("SphereShape3D_r2gkr")
 behavior_tree = ExtResource("3_ge2ll")
 blackboard_plan = SubResource("BlackboardPlan_ygq1y")
 
+[connection signal="animation_finished" from="AnimatedSprite3D" to="." method="_on_animated_sprite_3d_animation_finished"]
 [connection signal="body_entered" from="Detection zone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="Detection zone" to="." method="_on_detection_zone_body_exited"]
+
+[editable path="Skeleton_Minion"]

@@ -13,6 +13,9 @@ func update(slot: InvSlot):
 		amount.text = str(slot.count)
 		if slot.count >= 2:
 			amount.visible = true
+	elif slot.wep:
+		item_dis.texture = slot.wep.inv_image
+		amount.visible = false
 	else:
 		item_dis.texture = no_item
 		amount.visible = false

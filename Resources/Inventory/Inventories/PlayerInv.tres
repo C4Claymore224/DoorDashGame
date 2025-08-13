@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=18 format=3 uid="uid://nsrcjlvlnkhe"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=9 format=3 uid="uid://nsrcjlvlnkhe"]
 
 [ext_resource type="Script" uid="uid://7y10tsi1gmed" path="res://Resources/Inventory/Inventories/Inv_Slot.gd" id="2_70ok8"]
 [ext_resource type="Script" uid="uid://d28mahhoa7aac" path="res://Resources/Inventory/UI Scenes/Code/Inventory.gd" id="2_oxm8c"]
+[ext_resource type="Resource" uid="uid://b5h785lfxauar" path="res://Resources/Weapons/Pistol.tres" id="3_oxm8c"]
 
 [sub_resource type="Resource" id="Resource_oxm8c"]
 script = ExtResource("2_70ok8")
@@ -15,6 +16,7 @@ metadata/_custom_type_script = "uid://7y10tsi1gmed"
 
 [sub_resource type="Resource" id="Resource_yatyr"]
 script = ExtResource("2_70ok8")
+wep = ExtResource("3_oxm8c")
 count = 0
 metadata/_custom_type_script = "uid://7y10tsi1gmed"
 
@@ -28,57 +30,7 @@ script = ExtResource("2_70ok8")
 count = 0
 metadata/_custom_type_script = "uid://7y10tsi1gmed"
 
-[sub_resource type="Resource" id="Resource_y3765"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_pdn8q"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_xh83s"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_t0nt5"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_ptxrq"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_kp25d"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_60x10"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_d5vxj"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_duuev"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
-[sub_resource type="Resource" id="Resource_8dp78"]
-script = ExtResource("2_70ok8")
-count = 0
-metadata/_custom_type_script = "uid://7y10tsi1gmed"
-
 [resource]
 script = ExtResource("2_oxm8c")
-slots = Array[ExtResource("2_70ok8")]([SubResource("Resource_oxm8c"), SubResource("Resource_0e2ta"), SubResource("Resource_yatyr"), SubResource("Resource_f6wmf"), SubResource("Resource_t0n4h"), SubResource("Resource_y3765"), SubResource("Resource_pdn8q"), SubResource("Resource_xh83s"), SubResource("Resource_t0nt5"), SubResource("Resource_ptxrq"), SubResource("Resource_kp25d"), SubResource("Resource_60x10"), SubResource("Resource_d5vxj"), SubResource("Resource_duuev"), SubResource("Resource_8dp78")])
+slots = Array[ExtResource("2_70ok8")]([SubResource("Resource_oxm8c"), SubResource("Resource_0e2ta"), SubResource("Resource_yatyr"), SubResource("Resource_f6wmf"), SubResource("Resource_t0n4h")])
 metadata/_custom_type_script = "uid://d28mahhoa7aac"

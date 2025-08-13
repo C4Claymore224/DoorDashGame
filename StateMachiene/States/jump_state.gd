@@ -2,7 +2,10 @@ extends LimboState
 
 
 func _enter() -> void:
-	print("jumping")
-
-func _update(delta: float) -> void:
 	pass
+
+func _update(_delta: float) -> void:
+	if agent.velocity.y == 0:
+		get_root().dispatch("to_idle")
+	if agent.velocity.y < 0:
+		get_root().dispatch("to_fall")

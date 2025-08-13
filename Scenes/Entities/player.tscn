@@ -1,46 +1,24 @@
-[gd_scene load_steps=34 format=3 uid="uid://dl3uh7rq6crmk"]
+[gd_scene load_steps=46 format=3 uid="uid://dl3uh7rq6crmk"]
 
 [ext_resource type="Script" uid="uid://oudm3hveajgo" path="res://Code/Entities/player.gd" id="1_v0iea"]
 [ext_resource type="Resource" uid="uid://nsrcjlvlnkhe" path="res://Resources/Inventory/Inventories/PlayerInv.tres" id="2_6t5aa"]
 [ext_resource type="Texture2D" uid="uid://dd45jotwth07j" path="res://Assets/inv ui/crosshare.png" id="2_cvnsp"]
-[ext_resource type="PackedScene" uid="uid://d2f30ilyn667y" path="res://Weapons/weapon.tscn" id="3_pm2yg"]
-[ext_resource type="Resource" uid="uid://p0gxbdw8rn7" path="res://Weapons/Knife.tres" id="4_43gew"]
 [ext_resource type="PackedScene" uid="uid://niyvg1wuc8r" path="res://Resources/Inventory/UI Scenes/hot_bar.tscn" id="4_vgqql"]
 [ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="5_fkybt"]
 [ext_resource type="Texture2D" uid="uid://goud0fjt10hu" path="res://Assets/textures/Swirl_01-128x128.png" id="5_y18yp"]
 [ext_resource type="Texture2D" uid="uid://gmxlfpwktvii" path="res://Assets/inv ui/hand.png" id="6_y18yp"]
 [ext_resource type="Shader" uid="uid://bbohqiak5a0ku" path="res://Code/Shaders & Effect layers/effect.gdshader" id="6_yqx0t"]
 [ext_resource type="Texture2D" uid="uid://ujomm2j42pib" path="res://Assets/inv ui/Delet.png" id="7_85s6f"]
+[ext_resource type="Texture2D" uid="uid://8e3emyj2yoxt" path="res://Assets/inv ui/GASS.png" id="10_43gew"]
 [ext_resource type="Script" uid="uid://cx7e27wrhib3b" path="res://StateMachiene/States/idle_state.gd" id="11_f5ba2"]
 [ext_resource type="Script" uid="uid://60vdnx0vo863" path="res://StateMachiene/States/sprint_state.gd" id="12_f5ba2"]
+[ext_resource type="Texture2D" uid="uid://diwaet3nf7cmo" path="res://Assets/Weapons/Pistol.png" id="12_udx2w"]
+[ext_resource type="Texture2D" uid="uid://clahira12tsv2" path="res://Assets/items/Soda.png" id="12_vbauc"]
 [ext_resource type="Script" uid="uid://dxciqb3xsfd7c" path="res://StateMachiene/States/jump_state.gd" id="13_at1v1"]
 [ext_resource type="Script" uid="uid://b6pq1faoe4xdc" path="res://StateMachiene/States/walk_state.gd" id="13_kvkok"]
 [ext_resource type="Script" uid="uid://dwra77yyvkv8m" path="res://StateMachiene/States/falling_state.gd" id="14_at1v1"]
-
-[sub_resource type="Animation" id="Animation_at1v1"]
-resource_name = "Attack Nife"
-length = 0.5
-
-[sub_resource type="Animation" id="Animation_pm2yg"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_43gew"]
-resource_name = "new_animation"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_43gew"]
-_data = {
-&"Attack Nife": SubResource("Animation_at1v1"),
-&"RESET": SubResource("Animation_pm2yg"),
-&"new_animation": SubResource("Animation_43gew")
-}
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85s6f"]
-albedo_color = Color(0.3, 0.1922, 0.069, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
-material = SubResource("StandardMaterial3D_85s6f")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
+[ext_resource type="Texture2D" uid="uid://bq2dc2sdf8rf8" path="res://Assets/items/Pizza.png" id="14_p6fni"]
+[ext_resource type="Texture2D" uid="uid://xntlq810fk1q" path="res://Assets/player stuff/hand open.png" id="15_pm2yg"]
 
 [sub_resource type="GDScript" id="GDScript_2hnfo"]
 script/source = "extends CanvasLayer
@@ -62,46 +40,8 @@ shader_parameter/hole_smoothness = 0.4
 shader_parameter/hole_radius = 0.34
 shader_parameter/transparency = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1rq5"]
-bg_color = Color(0.184214, 0.00439858, 0.00436981, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqx0t"]
-bg_color = Color(0.6, 0.078, 0.078, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="Animation" id="Animation_y18yp"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Speedeffect:material:shader_parameter/sample_radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Speedeffect:material:shader_parameter/line_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.408881, 0.263837, 0.0979652, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_ofjh0"]
 resource_name = "come_in"
@@ -152,13 +92,175 @@ tracks/0/keys = {
 "values": [0.5, 0.8]
 }
 
+[sub_resource type="Animation" id="Animation_w4uu0"]
+resource_name = "Hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HurtEffect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.579254, 1.97336e-06, 3.85046e-07, 1), Color(0.58, 0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_85s6f"]
 _data = {
+&"Hurt": SubResource("Animation_w4uu0"),
 &"RESET": SubResource("Animation_y18yp"),
 &"come_in": SubResource("Animation_ofjh0"),
 &"leave": SubResource("Animation_85s6f"),
 &"speed effect": SubResource("Animation_2hnfo")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1rq5"]
+bg_color = Color(0.184214, 0.00439858, 0.00436981, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqx0t"]
+bg_color = Color(0.6, 0.078, 0.078, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Animation" id="Animation_pm2yg"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_at1v1"]
+resource_name = "no_stam"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../bars/Stamina Bar:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.566667, 0.866667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_43gew"]
+_data = {
+&"RESET": SubResource("Animation_pm2yg"),
+&"no_stam": SubResource("Animation_at1v1")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6fni"]
+atlas = ExtResource("15_pm2yg")
+region = Rect2(36, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4uu0"]
+atlas = ExtResource("12_vbauc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbauc"]
+atlas = ExtResource("12_udx2w")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8wcv"]
+atlas = ExtResource("15_pm2yg")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abjg5"]
+atlas = ExtResource("14_p6fni")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_udx2w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6fni")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4uu0")
+}],
+"loop": true,
+"name": &"drink",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbauc")
+}],
+"loop": true,
+"name": &"holding gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8wcv")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abjg5")
+}],
+"loop": true,
+"name": &"pizza",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_vbauc"]
+resource_name = "switch_item"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(988.125, 515.156), Vector2(988.125, 781.216), Vector2(988.125, 515.156)]
+}
+
+[sub_resource type="Animation" id="Animation_p6fni"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(988.125, 515.156)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w4uu0"]
+_data = {
+&"RESET": SubResource("Animation_p6fni"),
+&"switch_item": SubResource("Animation_vbauc")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85s6f"]
+albedo_color = Color(0.3, 0.1922, 0.069, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
+material = SubResource("StandardMaterial3D_85s6f")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_at1v1"]
 radius = 0.666784
@@ -169,42 +271,19 @@ script = ExtResource("1_v0iea")
 state_machiene = NodePath("StateMachiene")
 inv = ExtResource("2_6t5aa")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_43gew")
-}
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_f60y1")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_v0iea")
-
-[node name="Head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.801405, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000570297, -0.137639, 0.00410426)
-
-[node name="lookcast" type="RayCast3D" parent="Head/Camera3D"]
-transform = Transform3D(1.12597, 0, 0, 0, -1.86398e-07, -1.22764, 0, 4.26428, -5.36617e-08, 0, 0.00104481, 0)
-collide_with_areas = true
-
-[node name="Hand" type="Node3D" parent="Head/Camera3D"]
-
-[node name="Weapon" parent="Head/Camera3D/Hand" instance=ExtResource("3_pm2yg")]
-transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0.316354, -0.0951021, -0.409236)
-weapon_type = ExtResource("4_43gew")
-
-[node name="Timers" type="Node3D" parent="."]
-
-[node name="speed_timer" type="Timer" parent="Timers"]
-one_shot = true
-
 [node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("player")]
 layer = -10
 script = SubResource("GDScript_2hnfo")
 player = NodePath("..")
+
+[node name="HurtEffect" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.579254, 1.97336e-06, 3.85046e-07, 1)
 
 [node name="Speedeffect" type="ColorRect" parent="UI"]
 visible = false
@@ -224,35 +303,61 @@ grow_vertical = 2
 layout_mode = 2
 texture = ExtResource("2_cvnsp")
 
-[node name="pickup" type="Sprite2D" parent="UI"]
+[node name="Croshairs" type="Node2D" parent="UI"]
+
+[node name="pickup" type="Sprite2D" parent="UI/Croshairs"]
 visible = false
 position = Vector2(575, 324)
 scale = Vector2(1.875, 1.75)
 texture = ExtResource("6_y18yp")
 
-[node name="delete" type="Sprite2D" parent="UI"]
+[node name="delete" type="Sprite2D" parent="UI/Croshairs"]
 visible = false
 position = Vector2(576, 324)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("7_85s6f")
 
+[node name="Gass" type="Sprite2D" parent="UI/Croshairs"]
+visible = false
+position = Vector2(575, 324)
+texture = ExtResource("10_43gew")
+
 [node name="Hot bar" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("4_vgqql")]
 player = NodePath("../..")
 
-[node name="Stamina Bar" type="ProgressBar" parent="UI"]
-offset_left = 784.0
-offset_top = 549.0
-offset_right = 837.0
-offset_bottom = 647.0
-theme = ExtResource("5_fkybt")
-fill_mode = 3
-show_percentage = false
+[node name="ui_anim" type="AnimationPlayer" parent="UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_85s6f")
+}
 
-[node name="Health Bar" type="ProgressBar" parent="UI"]
-offset_left = 304.0
-offset_top = 550.0
-offset_right = 357.0
-offset_bottom = 648.0
+[node name="Label" type="Label" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -12.0
+offset_right = 76.0
+offset_bottom = 11.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "Blah"
+vertical_alignment = 1
+
+[node name="bars" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health Bar" type="ProgressBar" parent="UI/bars"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 51.0
+offset_bottom = 131.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
 theme = ExtResource("5_fkybt")
 theme_override_styles/background = SubResource("StyleBoxFlat_a1rq5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_yqx0t")
@@ -260,10 +365,64 @@ value = 50.0
 fill_mode = 3
 show_percentage = false
 
-[node name="ui_anim" type="AnimationPlayer" parent="UI"]
+[node name="Stamina Bar" type="ProgressBar" parent="UI/bars"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 4.0
+offset_right = 234.0
+offset_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("5_fkybt")
+show_percentage = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/bars/Stamina Bar"]
+root_node = NodePath("../../../ui_anim")
 libraries = {
-&"": SubResource("AnimationLibrary_85s6f")
+&"": SubResource("AnimationLibrary_43gew")
 }
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(988.125, 515.156)
+scale = Vector2(9.11805, 7.39757)
+sprite_frames = SubResource("SpriteFrames_udx2w")
+animation = &"open"
+
+[node name="play_anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_w4uu0")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_f60y1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_v0iea")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.801405, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000570297, -0.137639, 0.00410426)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0449568, 0.153087, 0.0963583)
+light_color = Color(0.899293, 0.777962, 0.967313, 1)
+spot_range = 50.0
+spot_attenuation = 2.0
+spot_angle = 39.8045
+
+[node name="lookcast" type="RayCast3D" parent="Head/Camera3D"]
+transform = Transform3D(1.12597, 0, 0, 0, -1.86398e-07, -1.22764, 0, 4.26428, -5.36617e-08, 0, 0.00104481, 0)
+collide_with_areas = true
+
+[node name="Ranged_Muzzle" type="Marker3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.363382, -0.131, -0.638035)
+
+[node name="Timers" type="Node3D" parent="."]
+
+[node name="speed_timer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="HurtBox" type="Area3D" parent="."]
 
@@ -287,5 +446,5 @@ script = ExtResource("13_at1v1")
 [node name="falling state" type="LimboState" parent="StateMachiene"]
 script = ExtResource("14_at1v1")
 
-[connection signal="timeout" from="Timers/speed_timer" to="." method="_on_speed_timer_timeout"]
 [connection signal="animation_finished" from="UI/ui_anim" to="." method="_on_ui_anim_animation_finished"]
+[connection signal="timeout" from="Timers/speed_timer" to="." method="_on_speed_timer_timeout"]

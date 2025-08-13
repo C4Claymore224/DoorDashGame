@@ -20,6 +20,7 @@ func add_item(item: InvItem) -> void:
 				updated.emit()
 				return
 
+
 ## better version of the remove item func
 func remove_at_space(index: int) -> void:
 	if slots[index].item: # inventory space

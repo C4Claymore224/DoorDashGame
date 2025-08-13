@@ -1,24 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dgk0w5qexmt8m"]
+[gd_scene load_steps=16 format=3 uid="uid://dgk0w5qexmt8m"]
 
 [ext_resource type="Script" uid="uid://dbqt4dm40uo5p" path="res://Code/vehicles/car.gd" id="1_p7pfu"]
 [ext_resource type="Theme" uid="uid://bidm7pxxoremo" path="res://Assets/UI_Theme.tres" id="2_ovntf"]
 [ext_resource type="Resource" uid="uid://b1ifrma6ssvpf" path="res://Resources/Inventory/Inventories/car_storage.tres" id="2_vin2h"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2ng7n"]
-size = Vector3(2.4, 0.9, 3.6)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ng7n"]
-shading_mode = 0
-albedo_color = Color(0.190194, 0.0725093, 0.0258182, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_p7pfu"]
-material = SubResource("StandardMaterial3D_2ng7n")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7pfu"]
-albedo_color = Color(0.0687983, 0.0687983, 0.0687983, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ovntf"]
-material = SubResource("StandardMaterial3D_p7pfu")
+[ext_resource type="ArrayMesh" uid="uid://c0lqgl4we3rjl" path="res://Assets/Models/car body.res" id="3_mp83v"]
+[ext_resource type="ArrayMesh" uid="uid://cp6jhpylh4ha3" path="res://Assets/Models/right wheel.res" id="4_eqdax"]
+[ext_resource type="ArrayMesh" uid="uid://bdwlsrbwcc1v3" path="res://Assets/Models/left wheel.res" id="5_l5rc5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ovntf"]
 bg_color = Color(0.303805, 0.116369, 0.00783222, 1)
@@ -64,68 +51,31 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ng7n"]
+size = Vector3(2.85475, 1.07854, 6.72775)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_vin2h"]
-size = Vector3(2.40332, 0.929581, 0.522797)
+size = Vector3(2.45282, 1.02122, 1.15238)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mp83v"]
+emission_shape = 3
+emission_box_extents = Vector3(0.17, -0.05, -1.83)
+scale_min = 0.0
+scale_max = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mp83v"]
+albedo_color = Color(0.513233, 0.513233, 0.513233, 1)
+emission_enabled = true
+emission = Color(0.427493, 0.427493, 0.427493, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eqdax"]
+material = SubResource("StandardMaterial3D_mp83v")
+radius = 0.3
+height = 0.6
 
 [node name="Car" type="VehicleBody3D" groups=["Vehicle"]]
 script = ExtResource("1_p7pfu")
 storage = ExtResource("2_vin2h")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78814e-07, 0.2, 0)
-shape = SubResource("BoxShape3D_2ng7n")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.35872, 0, 0, 0, 0.88704, 0, 0, 0, 3.52, 0, 0.2, 0)
-mesh = SubResource("BoxMesh_p7pfu")
-
-[node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, 1.5)
-use_as_traction = true
-wheel_radius = 0.75
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
-transform = Transform3D(-4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("CylinderMesh_ovntf")
-
-[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, -1.4)
-use_as_steering = true
-wheel_radius = 0.75
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
-transform = Transform3D(-4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("CylinderMesh_ovntf")
-
-[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, -1.4)
-use_as_steering = true
-wheel_radius = 0.75
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
-transform = Transform3D(-4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("CylinderMesh_ovntf")
-
-[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 1.5)
-use_as_traction = true
-wheel_radius = 0.75
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
-transform = Transform3D(-4.37114e-08, -0.1, 0, 1, -4.37114e-09, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("CylinderMesh_ovntf")
-
-[node name="Camera Pivot" type="Node3D" parent="."]
-top_level = true
-
-[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
-transform = Transform3D(1, 0, 0, 0, 0.890213, 0.455545, 0, -0.455545, 0.890213, 0.1, 3, 4.5)
-
-[node name="leave spot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999363, -0.0356844, 0, 0.0356844, 0.999363, -2.8117, 1.2, -0.394768)
-
-[node name="player seat" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36773, 1.2754, -1.05785)
 
 [node name="Car Hud" type="CanvasLayer" parent="."]
 
@@ -166,6 +116,70 @@ value = 20.0
 fill_mode = 3
 show_percentage = false
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019229, 0.357899, -0.000182897)
+shape = SubResource("BoxShape3D_2ng7n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.6, 0, -2.41593e-07, 0, 1.6, 0, 2.41593e-07, 0, -1.6, 0.00786138, -0.104002, -0.0145984)
+mesh = ExtResource("3_mp83v")
+
+[node name="Runover Area" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Runover Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0110142, 0.513912, -3.10037)
+shape = SubResource("BoxShape3D_vin2h")
+debug_color = Color(0.998151, 0, 0.149284, 0.42)
+
+[node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17861, 0.150517, 1.90196)
+use_as_traction = true
+wheel_radius = 0.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("4_eqdax")
+
+[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.28674, 0.146124, -1.89868)
+use_as_steering = true
+wheel_radius = 0.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("4_eqdax")
+
+[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33255, 0.157106, -1.88848)
+use_as_steering = true
+wheel_radius = 0.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("5_l5rc5")
+
+[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20512, 0.222364, 2.01153)
+use_as_traction = true
+wheel_radius = 0.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+mesh = ExtResource("5_l5rc5")
+
+[node name="Camera Pivot" type="Node3D" parent="."]
+top_level = true
+
+[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.890213, 0.455545, 0, -0.455545, 0.890213, 0.1, 3.90639, 5.68239)
+fov = 90.0
+
+[node name="leave spot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999363, -0.0356844, 0, 0.0356844, 0.999363, -5.07023, 1.2, -0.277849)
+
+[node name="player seat" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.545077, 1.2754, -1.05785)
+
 [node name="speed pow timer" type="Timer" parent="."]
 wait_time = 8.0
 one_shot = true
@@ -173,12 +187,45 @@ one_shot = true
 [node name="speed cooldown" type="Timer" parent="."]
 one_shot = true
 
-[node name="Runover Area" type="Area3D" parent="."]
+[node name="Fright" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.839128, 0.509631, -3.3393)
+light_color = Color(0.737255, 0.784314, 0.858824, 1)
+distance_fade_enabled = true
+spot_range = 20.0
+spot_angle = 30.9375
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Runover Area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.205055, -1.53189)
-shape = SubResource("BoxShape3D_vin2h")
-debug_color = Color(0.998151, 0, 0.149284, 0.42)
+[node name="Fleft" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.876294, 0.534754, -3.28243)
+light_color = Color(0.737255, 0.784314, 0.858824, 1)
+distance_fade_enabled = true
+spot_range = 20.0
+spot_angle = 30.9375
 
-[connection signal="timeout" from="speed pow timer" to="." method="_on_speed_pow_timer_timeout"]
+[node name="Bleft" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.74228e-08, 0.5, -0.866025, 0.874637, 0.880389, 3.04103)
+light_color = Color(0.494245, 1.40181e-06, 2.40654e-07, 1)
+spot_angle = 30.9375
+
+[node name="BRight" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.74228e-08, 0.5, -0.866025, -0.862861, 0.907925, 3.02525)
+light_color = Color(0.494245, 1.40181e-06, 2.40654e-07, 1)
+spot_angle = 30.9375
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.16397, 0, 4.13694)
+emitting = false
+amount = 100
+lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_mp83v")
+draw_pass_1 = SubResource("SphereMesh_eqdax")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16388, 0, 4.13694)
+emitting = false
+amount = 100
+lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_mp83v")
+draw_pass_1 = SubResource("SphereMesh_eqdax")
+
 [connection signal="body_entered" from="Runover Area" to="." method="_on_runover_area_body_entered"]
+[connection signal="timeout" from="speed pow timer" to="." method="_on_speed_pow_timer_timeout"]

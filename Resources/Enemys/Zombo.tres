@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ihk2f")
 name = "zombo"
-health = 8.0
+health = 10.0
 speed = 5.0
 jump_height = 3.7
 damage = 5.5

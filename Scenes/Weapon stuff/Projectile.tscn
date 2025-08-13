@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://ldtdrqg4rxfq"]
+
+[ext_resource type="Script" uid="uid://b8fukre4ub575" path="res://Code/weapon stuff/Projectile.gd" id="1_dlw2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dlw2f"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_iaxy5"]
+size = Vector3(0.105, 0.11, 0.705)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dlw2f"]
+emission_shape_scale = Vector3(1, -0.545, 1)
+inherit_velocity_ratio = 0.072
+direction = Vector3(1, 0, 1)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmkii"]
+vertex_color_is_srgb = true
+albedo_color = Color(0.863337, 0.51907, 0.303739, 1)
+emission_enabled = true
+emission = Color(0.748095, 0.383974, 0.135041, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_3kq2d"]
+material = SubResource("StandardMaterial3D_cmkii")
+size = Vector3(0.04, 0.04, 0.04)
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_dlw2f")
+speed = 100
+damage = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000280559, 0.00127585, -3.5882e-05)
+material_override = SubResource("StandardMaterial3D_dlw2f")
+mesh = SubResource("BoxMesh_iaxy5")
+skeleton = NodePath("")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.439832)
+emitting = false
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_dlw2f")
+draw_pass_1 = SubResource("BoxMesh_3kq2d")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.357058)
+target_position = Vector3(0, -0.745, 0)
+hit_from_inside = true
+
+[node name="Despawn" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Despawn" to="." method="_on_despawn_timeout"]
